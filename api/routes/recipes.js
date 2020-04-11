@@ -46,12 +46,21 @@ router.get("/:recipeID", (req, res, next) => {
 
 // Add Single Recipe
 router.post("/", (req, res, next) => {
+    let ingredients = []
+    let method = []
+    if (req.body.ingredients.indexOf("\n") >= 0) {
+        console.log("new line");
+        ingredients = req.body.ingredients.split(/\r?\n/);
+        method = req.body.method.split(/\r?\n/);
+    }
+
     const recipe = new Recipe({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         description: req.body.description,
-        ingredients: req.body.ingredients,
-        method: req.body.method,
+        recipeType: req.body.recipeType,
+        ingredients: ingredients,
+        method: method,
         servings: req.body.servings,
         prepTime: req.body.prepTime,
         cookTime: req.body.cookTime,
@@ -61,6 +70,7 @@ router.post("/", (req, res, next) => {
     recipe.save()
         .then(recipe => {
             res.status(200).json({
+                message: "Recipe Created",
                 recipe: recipe
             });
         })
@@ -82,7 +92,11 @@ router.patch("/:recipeID", (req, res, next) => {
             new: true
         })
         .then(recipe => {
-            res.status(200).json(recipe)
+
+            res.status(200).json({
+                message: "Recipe Updated",
+                recipe: recipe
+            })
         })
         .catch(err => {
             console.log(err);
