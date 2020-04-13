@@ -7,6 +7,7 @@ const cors = require("cors");
 
 // Import Routes
 const recipeRoutes = require("./routes/recipes")
+const testRoutes = require("./routes/test")
 
 
 // -----------------------------
@@ -33,5 +34,6 @@ app.use(cors());
 
 // Routes
 app.use("/recipes", recipeRoutes);
+app.use("/test", testRoutes);
 
 module.exports = app

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const recipeSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -36,8 +37,23 @@ const recipeSchema = mongoose.Schema({
     },
     servingSuggestion: {
         type: String,
+    },
+    recipeNo: {
+        type: Number
+    },
+    recipeCode: {
+        type: String
+    },
+    recipeThumbnailUrl: {
+        type: String
+    },
+    recipeImageUrls: {
+        type: Array
     }
 });
 
+recipeSchema.plugin(AutoIncrement, {
+    inc_field: 'recipeNo'
+});
 
 module.exports = mongoose.model("Recipe", recipeSchema);
