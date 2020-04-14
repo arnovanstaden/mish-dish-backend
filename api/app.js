@@ -7,11 +7,18 @@ const cors = require("cors");
 
 // Import Routes
 const recipeRoutes = require("./routes/recipes")
-const testRoutes = require("./routes/test")
 
 
 // -----------------------------
 // SETUP
+
+// Initialise Middleware
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(morgan("dev"));
+app.use(cors());
 
 // Mongo Atlas
 
@@ -24,16 +31,9 @@ mongoose.connect(`mongodb+srv://admin:${process.env.MONGO_ATLAS_PW}@recipes-otrm
     // })
     .catch(err => console.log(err))
 
-// Initialise Middleware
-app.use(express.json());
-app.use(express.urlencoded({
-    extended: true
-}));
-app.use(morgan("dev"));
-app.use(cors());
 
+// ------------------
 // Routes
 app.use("/recipes", recipeRoutes);
-app.use("/test", testRoutes);
 
 module.exports = app

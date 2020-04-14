@@ -56,6 +56,28 @@ router.get("/:recipeID", (req, res, next) => {
         })
 })
 
+// Get Single Recipe By Code
+router.get("/recipeCode/:recipeCode", (req, res, next) => {
+    Recipe.findOne({
+            recipeCode: req.params.recipeCode
+        })
+        .then(recipe => {
+            if (recipe) {
+                res.status(200).send(recipe)
+            } else {
+                res.status(404).json({
+                    message: "This Recipe does not exist"
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+})
+
 
 // Add Single Recipe
 router.post("/", upload.fields([{
