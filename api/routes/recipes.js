@@ -4,9 +4,9 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
-const cloudinaryStorage = require("multer-storage-cloudinary");
 const DataURI = require('datauri');
 const datauri = new DataURI();
+const checkAuth = require("../middleware/check-auth")
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -16,7 +16,7 @@ cloudinary.config({
 
 let upload = multer()
 
-// Import Model
+// Import Models
 const Recipe = require("../models/recipe")
 
 // Get All Recipes
@@ -80,7 +80,7 @@ router.get("/recipeCode/:recipeCode", (req, res, next) => {
 
 
 // Add Single Recipe
-router.post("/", upload.fields([{
+router.post("/", checkAuth, upload.fields([{
     name: "thumbnail"
 }, {
     name: "recipeImages"
@@ -228,7 +228,7 @@ router.post("/", upload.fields([{
 
 
 // Change Singe Recipe
-router.patch("/:recipeID", (req, res, next) => {
+router.patch("/:recipeID", checkAuth, (req, res, next) => {
     Recipe.findByIdAndUpdate({
             _id: req.params.recipeID
         }, req.body, {
@@ -251,7 +251,7 @@ router.patch("/:recipeID", (req, res, next) => {
 
 
 // Delete one Recipe
-router.delete("/:recipeID", (req, res, next) => {
+router.delete("/:recipeID", checkAuth, (req, res, next) => {
     Recipe.findOneAndDelete({
             _id: req.params.recipeID
         })
@@ -271,7 +271,7 @@ router.delete("/:recipeID", (req, res, next) => {
 
 // Delete all Recipes
 
-router.delete("/", (req, res, next) => {
+router.delete("/", checkAuth, (req, res, next) => {
     Recipe.deleteMany()
         .then(result => {
             Recipe.counterReset('recipeNo', function (err) {});

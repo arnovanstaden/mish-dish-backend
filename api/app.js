@@ -6,7 +6,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 // Import Routes
-const recipeRoutes = require("./routes/recipes")
+const recipeRoutes = require("./routes/recipes");
+const authRoutes = require("./routes/auth")
 
 
 // -----------------------------
@@ -19,6 +20,9 @@ app.use(express.urlencoded({
 }));
 app.use(morgan("dev"));
 app.use(cors());
+
+app.use(express.static(__dirname + '/View'));
+//Store all HTML files in view folder
 
 // Mongo Atlas
 
@@ -35,5 +39,7 @@ mongoose.connect(`mongodb+srv://admin:${process.env.MONGO_ATLAS_PW}@recipes-otrm
 // ------------------
 // Routes
 app.use("/recipes", recipeRoutes);
+app.use("/auth", authRoutes);
+
 
 module.exports = app
