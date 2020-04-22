@@ -17,7 +17,7 @@ cloudinary.config({
 let upload = multer()
 
 // Import Models
-const Recipe = require("../models/recipe")
+const Recipe = require("../models/Recipe")
 
 // Get All Recipes
 router.get("/", (req, res, next) => {
