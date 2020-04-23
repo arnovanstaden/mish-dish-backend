@@ -76,25 +76,3 @@ const test = () => {
             $("html").html(response.data);
         })
 }
-
-// Handle Login
-
-const handleLogin = () => {
-    event.preventDefault();
-    const user = {
-        username: $("#loginUsername").val(),
-        password: $("#loginPassword").val(),
-    }
-    axios.post("/auth/login", {
-            username: $("#loginUsername").val(),
-            password: $("#loginPassword").val(),
-        })
-        .then(response => {
-            console.log(response);
-            $("body").html(response.data);
-            showRecipes()
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name=" robots" content="noindex, nofollow">
+    <meta name=" robots" content="index, follow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Webdacity -->
@@ -44,15 +44,14 @@
 
 <body class="text-center">
 
-    <form class="form-signin" method="POST" action="/auth/login">
+    <form class="form-signin">
         <img class="mb-4" src="./assets/images/logos/The-Mish-Dish-Final-Logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="loginUsername" class="form-control" placeholder="Username" name="username" required
-            autofocus="">
+        <input type="text" id="loginUsername" class="form-control" placeholder="Username" required autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="loginPassword" class="form-control" placeholder="Password" name="password" required>
-        <button class="btn btn-lg btn-block" type="submit">Sign in</button>
+        <input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-block" type="submit" onclick="handleLogin()">Sign in</button>
     </form>
 
 

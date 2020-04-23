@@ -61,10 +61,10 @@
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
             <ul class="navbar-nav ">
                 <li class="nav-item">
-                    <a class="nav-link">
-                        Logout
-                        <i class="fal fa-sign-out-alt"></i>
-                    </a>
+                    <form action="/auth/logout" class="logout-form" method="post">
+                        <button type="submit" id="logout-button"> Logout <i class="fal fa-sign-out-alt"></i>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -112,7 +112,7 @@
                             Add Recipe
                         </button>
                     </div>
-                    <div class="main-item-grid recipes-grid container row">
+                    <div class="main-item-grid recipes-grid container">
                         <!-- Fetched Recipes Inserted Here -->
                     </div>
                 </main>

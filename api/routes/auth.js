@@ -21,10 +21,11 @@ router.post("/login", (req, res) => {
                 bcrypt.compare(password, user.password)
                     .then(result => {
                         if (result) {
+                            req.session.isLoggedIn = true;
                             return res.redirect("/dashboard")
                         } else {
                             console.log("Password Invalid");
-                            res.status(401).send()
+                            res.status(401).redirect("/")
                         }
                     })
                     .catch(err => {
@@ -38,7 +39,14 @@ router.post("/login", (req, res) => {
             }
         })
 
-})
+});
+
+router.post("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        console.log(err)
+        res.redirect("/");
+    });
+});
 
 module.exports = router
 

@@ -97,21 +97,15 @@ html {
     margin: 0;
 }
 
-#logout-button {
+.nav-link {
     color: var(--light-blue) !important;
     margin-right: 30px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    background-color: transparent !important;
-    border: none;
 }
 
-.logout-form {
-    padding-top: 0;
-}
-
-#logout-button i {
+.nav-link i {
     padding-left: 10px;
     color: var(--light-blue);
 }

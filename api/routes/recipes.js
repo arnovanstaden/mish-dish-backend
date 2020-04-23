@@ -10,8 +10,8 @@ const checkAuth = require("../middleware/check-auth")
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 let upload = multer()
