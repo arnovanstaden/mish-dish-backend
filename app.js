@@ -13,7 +13,7 @@ const checkAuth = require("./api/middleware/check-auth")
 // Import Routes
 const recipeRoutes = require("./api/routes/recipes");
 const authRoutes = require("./api/routes/auth")
-const userRoutes = require("./api/routes/user")
+const userRoutes = require("./api/routes/users")
 
 
 // -----------------------------
