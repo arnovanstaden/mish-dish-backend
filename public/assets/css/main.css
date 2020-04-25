@@ -374,7 +374,7 @@ main.active {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: center
+    justify-content: flex-start;
 }
 
 .main-item-grid .grid-item {

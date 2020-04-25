@@ -6,7 +6,8 @@ const cors = require("cors");
 const path = require("path");
 const appRoot = path.dirname(require.main.filename);
 const session = require("express-session");
-const mongoDBStore = require("connect-mongodb-session")(session)
+const mongoDBStore = require("connect-mongodb-session")(session);
+const checkAuth = require("./middleware/check-auth")
 
 
 // Import Routes
@@ -56,24 +57,37 @@ app.use(session({
     store: store
 }))
 
-
-
-
-
 // ------------------
 // Routes
 app.use("/recipes", recipeRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 
-app.get("/", (req, res, next) => {
-    res.sendFile(path.join(appRoot, "/api/views/login.html"))
-})
-app.use("/dashboard", (req, res) => {
-    res.sendFile(path.join(appRoot, "/api/views/dashboard.html"))
+app.get("/", checkAuth, (req, res, next) => {
+    res.sendFile(path.join(appRoot, "/api/views/dashboard.html"));
 });
 
+app.get("/login", (req, res) => {
+    if (req.session.isLoggedIn) {
+        return res.redirect("/");
+    }
+    res.sendFile(path.join(appRoot, "/api/views/login.html"))
+});
 
+// Handle Route Errors
+app.use((req, res, next) => {
+    const error = new Error("Route Not Found")
+    error.status = 404;
+    next(error)
+});
 
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    })
+})
 
 module.exports = app
