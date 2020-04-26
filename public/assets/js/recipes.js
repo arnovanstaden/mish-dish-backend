@@ -1,4 +1,4 @@
-const api_url = "http://localhost:3000";
+const api_url = "https://the-mish-dish-backend.herokuapp.com/recipes";
 //https://the-mish-dish-backend.herokuapp.com/recipes
 
 // Get all Recipes
