@@ -5,19 +5,17 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
 const DataURI = require('datauri');
-const datauri = new DataURI();
-const checkAuth = require("../middleware/check-auth")
+const checkAuth = require("../middleware/check-auth");
+const Recipe = require("../models/Recipe")
 
+// Config
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-
+const datauri = new DataURI();
 let upload = multer()
-
-// Import Models
-const Recipe = require("../models/Recipe")
 
 // Get All Recipes
 router.get("/", (req, res, next) => {
