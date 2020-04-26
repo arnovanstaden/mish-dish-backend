@@ -1,4 +1,4 @@
-const api_url = "https://the-mish-dish-backend.herokuapp.com/recipes";
+const api_url = "https://the-mish-dish-backend.herokuapp.com/";
 //https://the-mish-dish-backend.herokuapp.com/recipes
 
 // Get all Recipes
