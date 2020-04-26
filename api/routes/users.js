@@ -28,13 +28,13 @@ router.post("/", (req, res) => {
 })
 
 router.get("/", (req, res) => {
-    User.find()
-        .then(result => {
-            res.status(200).json({
-                result
-            })
-        })
-    // res.status(403).send()
+    // User.find()
+    //     .then(result => {
+    //         res.status(200).json({
+    //             result
+    //         })
+    //     })
+    res.status(403).send()
 })
 
 module.exports = router;
