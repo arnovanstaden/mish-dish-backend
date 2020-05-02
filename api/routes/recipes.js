@@ -83,25 +83,25 @@ router.post("/", checkAuth, upload.fields([{
 }, {
     name: "recipeImages"
 }]), (req, res, next) => {
-    // console.log(req)
     const recipeBody = JSON.parse(req.body.recipe);
-    let ingredients = []
-    let method = []
-    if (recipeBody.ingredients.indexOf("\n") >= 0) {
-        ingredients = recipeBody.ingredients.split(/\r?\n/);
-        method = recipeBody.method.split(/\r?\n/);
-    } else {
-        ingredients = recipeBody.ingredients;
-        method = recipeBody.method;
-    }
+    console.log(recipeBody)
+    // let ingredients = []
+    // let method = []
+    // if (recipeBody.ingredients.indexOf("\n") >= 0) {
+    //     ingredients = recipeBody.ingredients.split(/\r?\n/);
+    //     method = recipeBody.method.split(/\r?\n/);
+    // } else {
+    //     ingredients = recipeBody.ingredients;
+    //     method = recipeBody.method;
+    // }
 
     const recipe = new Recipe({
         _id: new mongoose.Types.ObjectId(),
         name: recipeBody.name,
         description: recipeBody.description,
         recipeType: recipeBody.recipeType,
-        ingredients: ingredients,
-        method: method,
+        ingredients: recipeBody.ingredients,
+        method: recipeBody.method,
         servings: recipeBody.servings,
         prepTime: recipeBody.prepTime,
         cookTime: recipeBody.cookTime,
@@ -122,10 +122,6 @@ router.post("/", checkAuth, upload.fields([{
                 })
                 .then(recipe => {
                     uploadThumbImg(recipe.recipeCode, recipe._id);
-
-                    // res.status(200).json({
-                    //     message: "Recipe Created"
-                    // })
                 })
                 .catch(err => {
                     console.log(err);

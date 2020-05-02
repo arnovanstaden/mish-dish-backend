@@ -104,7 +104,7 @@
 
 
                 <!-- Display Recipes -->
-                <main class="main-container active col-sm-10 ml-sm-auto px-4" id="main-recipes-container">
+                <main class="main-container  col-sm-10 ml-sm-auto px-4" id="main-recipes-container">
                     <div class="main-heading container">
                         <h2>Recipes</h2>
                         <button class="my-button" id="add-recipe-button">
@@ -120,7 +120,7 @@
 
                 <!-- Add Recipe -->
 
-                <main class="main-container col-10 ml-sm-auto px-4" id="main-recipes-add-container">
+                <main class="main-container active col-10 ml-sm-auto px-4" id="main-recipes-add-container">
                     <div class="main-heading container">
                         <h2>Add New Recipe</h2>
                         <button class="my-button-alt back-recipe-button">
@@ -185,21 +185,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ingredients-group">
                             <label> Ingredients</label>
-                            <textarea class="form-control" rows="4" name="ingredients" required>Test Desc</textarea>
-                            <small class="form-text text-muted">Put each ingredient on its own line</small>
+                            <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
+                                line.
+                            </small>
+                            <input type="text" class="form-control mb-2 d-none" placeholder="Ingredients Component Name"
+                                name="ingredients-component1" value="Comp1">
+                            <textarea class="form-control mb-2" rows="4" name="ingredients1"
+                                required>Test Desc</textarea>
                             <div class="invalid-feedback">
                                 Please provide valid recipe ingredients.
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="addInputGroup">
+                            <button type="button" class="addInputMethodMethodButton"
+                                onclick="addInput('add-recipe-form','ingredients')">
+                                <i class="far fa-plus"></i>
+                                Add Ingredients
+                                Component
+                            </button>
+                        </div>
+                        <div class="form-group method-group">
                             <label> Method</label>
-                            <textarea class="form-control" rows="4" name="method" required>Test Desc</textarea>
-                            <small class="form-text text-muted">Put each step on its own line</small>
+                            <small class="form-text text-muted mt-0 mb-2">Put each step on its own
+                                line.</small>
+                            <input type="text" class="form-control mb-2 d-none" placeholder="Method Component Name"
+                                name="method-component1" value="Comp1">
+                            <textarea class="form-control mb-2" rows="4" name="method1" required>Test Desc</textarea>
                             <div class="invalid-feedback">
                                 Please provide a valid recipe method.
                             </div>
+                        </div>
+                        <div class="addInputGroup">
+                            <button type="button" class="addInputMethodMethodButton"
+                                onclick="addInput('add-recipe-form','method')"> <i class="far fa-plus"></i>
+                                Add Method Component
+                            </button>
                         </div>
                         <div class="form-group">
                             <label> Serving Suggestion</label>
@@ -207,8 +229,8 @@
                         </div>
                         <div class="form-group">
                             <label>Recipe Thumbnail Image</label>
-                            <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" required
-                                accept="image/x-png,image/jpeg">
+                            <input type="file" class="form-control-file" id="thumbnail" name="thumbnail"
+                                accept="image/x-png,image/jpeg" required>
                             <small class="form-text text-muted">This is the thumbnail for your recipe appearing on
                                 the home page.</small>
                             <small class="form-text text-muted font-italic">Max file size per upload is 10 MB</small>
@@ -218,8 +240,8 @@
                         </div>
                         <div class="form-group">
                             <label>recipe Images</label>
-                            <input type="file" class="form-control-file" id="recipeImages" name="recipeImages" required
-                                accept="image/x-png,image/jpeg" multiple>
+                            <input type="file" class="form-control-file" id="recipeImages" name="recipeImages"
+                                accept="image/x-png,image/jpeg" multiple required>
                             <small class="form-text text-muted">These images are displayed on the recipe page. Hold
                                 "Ctrl"/"Command(⌘)" or drag your cursor to select multiple images. Include the
                                 thumbnail image used above. </small>
@@ -301,21 +323,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ingredients-group">
                             <label> Ingredients</label>
-                            <textarea class="form-control" rows="4" name="ingredients" required></textarea>
-                            <small class="form-text text-muted">Put each ingredient on its own line</small>
+                            <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
+                                line.
+                            </small>
+                            <input type="text" class="form-control mb-2 d-none" name="ingredients-component1">
+                            <textarea class="form-control mb-2" rows="4" name="ingredients1"
+                                required>Test Desc</textarea>
                             <div class="invalid-feedback">
                                 Please provide valid recipe ingredients.
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="addInputGroup">
+                            <button type="button" class="addInputMethodMethodButton"
+                                onclick="addInput('edit-recipe-form','ingredients')">
+                                <i class="far fa-plus"></i>
+                                Add Ingredients
+                                Component
+                            </button>
+                        </div>
+                        <div class="form-group method-group">
                             <label> Method</label>
-                            <textarea class="form-control" rows="4" name="method" required></textarea>
-                            <small class="form-text text-muted">Put each step on its own line</small>
+                            <small class="form-text text-muted mt-0 mb-2">Put each step on its own
+                                line.</small>
+                            <input type="text" class="form-control mb-2 d-none" name="method-component1">
+                            <textarea class="form-control mb-2" rows="4" name="method1" required>Test Desc</textarea>
                             <div class="invalid-feedback">
                                 Please provide a valid recipe method.
                             </div>
+                        </div>
+                        <div class="addInputGroup">
+                            <button type="button" class="addInputMethodMethodButton"
+                                onclick="addInput('edit-recipe-form','method')"> <i class="far fa-plus"></i>
+                                Add Method Component
+                            </button>
                         </div>
                         <div class="form-group">
                             <label> Serving Suggestion</label>

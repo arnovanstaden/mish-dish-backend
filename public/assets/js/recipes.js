@@ -1,5 +1,5 @@
-const api_url = "https://the-mish-dish-backend.herokuapp.com";
-//https://the-mish-dish-backend.herokuapp.com/recipes
+// const api_url = "https://the-mish-dish-backend.herokuapp.com";
+const api_url = "http://localhost:3000";
 
 // Get all Recipes
 function getRecipes(yes) {
@@ -105,8 +105,36 @@ function addRecipe() {
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#add-recipe-form [name='servingSuggestion']").val(),
-        ingredients: $("#add-recipe-form [name='ingredients']").val(),
-        method: $("#add-recipe-form [name='method']").val()
+        ingredients: {},
+        method: {}
+    }
+
+    // Get Ingredients
+    const ingredientInputCount = $("#add-recipe-form .ingredients-group").children("textarea").length;
+    let ingKey = "";
+    for (i = 1; i <= ingredientInputCount; i++) {
+        if (ingredientInputCount === 1) {
+            ingKey = "0"
+        } else {
+            ingKey = $(`#add-recipe-form .ingredients-group input[name='ingredients-component${i}']`).val();
+        }
+        let ingredients = $(`#add-recipe-form .ingredients-group textarea[name='ingredients${i}']`).val();
+        ingredients = ingredients.split("\n")
+        recipe.ingredients[ingKey] = ingredients;
+    }
+
+    // Get Ingredients
+    const methodInputCount = $("#add-recipe-form .method-group").children("textarea").length;
+    let methodKey = "";
+    for (i = 1; i <= methodInputCount; i++) {
+        if (methodInputCount === 1) {
+            methodKey = "0"
+        } else {
+            methodKey = $(`#add-recipe-form .method-group input[name='method-component${i}']`).val();
+        }
+        let method = $(`#add-recipe-form .method-group textarea[name='method${i}']`).val();
+        method = method.split("\n")
+        recipe.method[methodKey] = method;
     }
 
     let formData = new FormData();
@@ -118,6 +146,7 @@ function addRecipe() {
     formData.append("thumbnail", thumbnailImage);
     formData.append("recipe", JSON.stringify(recipe));
 
+    console.log(recipe)
     // Post Recipe
     axios({
             method: 'post',
@@ -169,16 +198,60 @@ const loadEditRecipe = (recipe) => {
     $("#edit-recipe-form [name='prepTime']").val(recipe.prepTime);
     $("#edit-recipe-form [name='cookTime']").val(recipe.cookTime);
     $("#edit-recipe-form [name='servingSuggestion']").val(recipe.servingSuggestion);
-    let ingredients = recipe.ingredients.join("\n")
-    $("#edit-recipe-form [name='ingredients']").val(ingredients);
-    let method = recipe.method.join("\n")
-    $("#edit-recipe-form [name='method']").val(method);
+
+    // Load Images
     $("#edit-thumbnail-image-container img").attr("src", recipe.recipeThumbnailUrl);
     recipe.recipeImageUrls.forEach(image => {
         $("#edit-recipe-images-container").append(
-            `<img src="${image}">                `
+            `<img src="${image}">`
         )
-    })
+    });
+
+    // Load Ingredients
+    const ingredientKeys = Object.keys(recipe.ingredients);
+    if (ingredientKeys.length === 1) {
+        $("#edit-recipe-form textarea[name='ingredients1']").val(recipe.ingredients["0"]);
+    } else {
+        $("#edit-recipe-form input[name='ingredients-component1']").removeClass("d-none");
+        let ingCount = 0
+        ingredientKeys.forEach(key => {
+            ingCount++;
+            if (ingCount > 1) {
+                $(`#edit-recipe-form .ingredients-group`).append(
+                    `<input type="text" class="form-control my-2"  Component Name" name="ingredients-component${ingCount}"
+                    required>`
+                );
+                $(`#edit-recipe-form .ingredients-group`).append(
+                    `<textarea class="form-control my-2" rows="4" name="ingredients${ingCount}" required></textarea>`
+                );
+            }
+            $(`#edit-recipe-form input[name='ingredients-component${ingCount}']`).val(key)
+            $(`#edit-recipe-form textarea[name='ingredients${ingCount}']`).val(recipe.ingredients[key].join("\n"))
+        })
+    }
+
+    // Load Method
+    const methodKeys = Object.keys(recipe.method);
+    if (methodKeys.length === 1) {
+        $("#edit-recipe-form textarea[name='method1']").val(recipe.method["0"]);
+    } else {
+        $("#edit-recipe-form input[name='method-component1']").removeClass("d-none");
+        let methodCount = 0;
+        methodKeys.forEach(key => {
+            methodCount++;
+            if (methodCount > 1) {
+                $(`#edit-recipe-form .method-group`).append(
+                    `<input type="text" class="form-control my-2"  Component Name" name="method-component${methodCount}"
+                    required>`
+                );
+                $(`#edit-recipe-form .method-group`).append(
+                    `<textarea class="form-control my-2" rows="4" name="method${methodCount}" required></textarea>`
+                );
+            }
+            $(`#edit-recipe-form input[name='method-component${methodCount}']`).val(key)
+            $(`#edit-recipe-form textarea[name='method${methodCount}']`).val(recipe.method[key].join("\n"))
+        })
+    }
 }
 
 
@@ -196,8 +269,36 @@ const saveEditRecipe = () => {
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
         cookTime: $("#edit-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#edit-recipe-form [name='servingSuggestion']").val(),
-        ingredients: $("#edit-recipe-form [name='ingredients']").val(),
-        method: $("#edit-recipe-form [name='method']").val()
+        ingredients: {},
+        method: {}
+    }
+
+    // Get Ingredients
+    const ingredientInputCount = $("#edit-recipe-form .ingredients-group").children("textarea").length;
+    let ingKey = "";
+    for (i = 1; i <= ingredientInputCount; i++) {
+        if (ingredientInputCount === 1) {
+            ingKey = "0"
+        } else {
+            ingKey = $(`#edit-recipe-form .ingredients-group input[name='ingredients-component${i}']`).val();
+        }
+        let ingredients = $(`#edit-recipe-form .ingredients-group textarea[name='ingredients${i}']`).val();
+        ingredients = ingredients.split("\n")
+        recipe.ingredients[ingKey] = ingredients;
+    }
+
+    // Get Ingredients
+    const methodInputCount = $("#edit-recipe-form .method-group").children("textarea").length;
+    let methodKey = "";
+    for (i = 1; i <= methodInputCount; i++) {
+        if (methodInputCount === 1) {
+            methodKey = "0"
+        } else {
+            methodKey = $(`#edit-recipe-form .method-group input[name='method-component${i}']`).val();
+        }
+        let method = $(`#edit-recipe-form .method-group textarea[name='method${i}']`).val();
+        method = method.split("\n")
+        recipe.method[methodKey] = method;
     }
 
     // Patch Recipe
@@ -205,14 +306,12 @@ const saveEditRecipe = () => {
             method: 'patch',
             url: `${api_url}/recipes/${recipeID}`,
             data: recipe,
-            headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTWlzaERlVm9zIiwiZW1haWwiOiJkZXZvc21hcmlzaGFAZ21haWwuY29tIiwiaWF0IjoxNTg3MzgxODg5LCJleHAiOjE1ODczODU0ODl9.UjO-40rO6nBCwKY_5doypPHqLlb9wc1Ivkp-UjfH1d4"
-            }
         })
         .then((response) => {
             console.log(response.data);
             showRecipes(true);
             notify("Recipe Edited");
+            resetEditForm();
         })
         .catch(err => {
             console.log(err);
@@ -229,9 +328,6 @@ const deleteRecipe = () => {
     axios({
             method: 'delete',
             url: `${api_url}/recipes/${recipeID}`,
-            headers: {
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiTWlzaERlVm9zIiwiZW1haWwiOiJkZXZvc21hcmlzaGFAZ21haWwuY29tIiwiaWF0IjoxNTg3MzgxODg5LCJleHAiOjE1ODczODU0ODl9.UjO-40rO6nBCwKY_5doypPHqLlb9wc1Ivkp-UjfH1d4"
-            }
         })
         .then((response) => {
             console.log(response.data);
@@ -252,4 +348,26 @@ $(document).ready(() => {
 // Back to Recipes Button
 $(".back-recipe-button").click(() => {
     showRecipes(true)
+    resetEditForm();
 });
+
+const resetEditForm = () => {
+    $(`#edit-recipe-form .ingredients-group`).empty();
+    $(`#edit-recipe-form .method-group`).empty();
+    $("#edit-recipe-images-container").empty();
+
+    $(`#edit-recipe-form .ingredients-group`).append(
+        `<input type="text" class="form-control my-2 d-none"  Component Name" name="ingredients-component1"
+        required>`
+    );
+    $(`#edit-recipe-form .ingredients-group`).append(
+        `<textarea class="form-control my-2" rows="4" name="ingredients1" required></textarea>`
+    );
+    $(`#edit-recipe-form .method-group`).append(
+        `<input type="text" class="form-control my-2 d-none"  Component Name" name="method-component1"
+        required>`
+    );
+    $(`#edit-recipe-form .method-group`).append(
+        `<textarea class="form-control my-2" rows="4" name="method1" required></textarea>`
+    );
+}

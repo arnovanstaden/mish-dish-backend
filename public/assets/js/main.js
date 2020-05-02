@@ -67,3 +67,16 @@ const hideLoader = () => {
     $("html").css("overflow-y", "scroll")
     $(".loader").fadeOut(500);
 }
+
+// Add Inputs (Ingredients & Method)
+const addInput = (form, type) => {
+    inputCount = $(`#${form} .${type}-group`).children("textarea").length + 1;
+    $(`#${form} .${type}-group input`).removeClass("d-none");
+    $(`#${form} .${type}-group`).append(
+        `<input type="text" class="form-control my-2" placeholder="${type} Component Name" name="${type}-component${inputCount}"
+        required>`
+    );
+    $(`#${form} .${type}-group`).append(
+        `<textarea class="form-control my-2" rows="4" name="${type}${inputCount}" required>Test Desc</textarea>`
+    );
+}

@@ -16,11 +16,11 @@ const recipeSchema = mongoose.Schema({
         required: true
     },
     ingredients: {
-        type: Array,
+        type: mongoose.Schema.Types.Mixed,
         required: true
     },
     method: {
-        type: Array,
+        type: mongoose.Schema.Types.Mixed,
         required: true
     },
     servings: {
