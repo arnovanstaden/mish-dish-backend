@@ -147,7 +147,7 @@ router.post("/", checkAuth, upload.fields([{
                     width: 250,
                     height: 250,
                     crop: "lfill",
-                    quality: 80
+                    quality: 90
                 }]
             },
             function (error, result) {
