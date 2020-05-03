@@ -24,7 +24,7 @@ const recipeSchema = mongoose.Schema({
         required: true
     },
     servings: {
-        type: Number,
+        type: String,
         required: true
     },
     prepTime: {
