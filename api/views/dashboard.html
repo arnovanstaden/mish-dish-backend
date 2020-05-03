@@ -185,18 +185,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label> Serving Suggestion</label>
-                            <textarea class="form-control" rows="2" name="servingSuggestion"
-                                placeholder="I would highly recommend letting your curry cool down slightly before serving. "></textarea>
-                        </div>
                         <div class="form-group ingredients-group">
                             <label> Ingredients</label>
                             <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
                                 line.
                             </small>
                             <input type="text" class="form-control mb-2 d-none" placeholder="Ingredients Component Name"
-                                name="ingredients-component1" value="Comp1">
+                                name="ingredients-component1">
                             <textarea class="form-control mb-2" rows="4" name="ingredients1"
                                 placeholder="4 Chicken Breasts &#10;200g Spagetti" required></textarea>
                             <div class="invalid-feedback">
@@ -228,6 +223,11 @@
                                 onclick="addInput('add-recipe-form','method')"> <i class="far fa-plus"></i>
                                 Add Method Component
                             </button>
+                        </div>
+                        <div class="form-group">
+                            <label> Serving Suggestion</label>
+                            <textarea class="form-control" rows="2" name="servingSuggestion"
+                                placeholder="I would highly recommend letting your curry cool down slightly before serving. "></textarea>
                         </div>
                         <div class="form-group">
                             <label>Recipe Thumbnail Image</label>

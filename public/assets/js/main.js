@@ -73,7 +73,7 @@ const addInput = (form, type) => {
     inputCount = $(`#${form} .${type}-group`).children("textarea").length + 1;
     $(`#${form} .${type}-group input`).removeClass("d-none");
     $(`#${form} .${type}-group`).append(
-        `<input type="text" class="form-control my-2" placeholder="${type} Component Name" name="${type}-component${inputCount}"
+        `<input type="text" class="form-control my-2" placeholder="Component Name" name="${type}-component${inputCount}"
         required>`
     );
     $(`#${form} .${type}-group`).append(
