@@ -49,6 +49,9 @@ const recipeSchema = mongoose.Schema({
     },
     recipeImageUrls: {
         type: Array
+    },
+    addOnCode: {
+        type: String,
     }
 });
 

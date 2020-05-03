@@ -22,11 +22,6 @@
 
     <!-- StyleSheets -->
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,500,600,700&display=swap"
-        rel="stylesheet">
-
-
     <!-- Theme Colour -->
     <meta name="theme-color" content="#">
     <meta name="apple-mobile-web-app-status-bar-style" content="">
@@ -120,7 +115,7 @@
 
                 <!-- Add Recipe -->
 
-                <main class="main-container active col-10 ml-sm-auto px-4" id="main-recipes-add-container">
+                <main class="main-container active col-md-10 ml-sm-auto px-4" id="main-recipes-add-container">
                     <div class="main-heading container">
                         <h2>Add New Recipe</h2>
                         <button class="my-button-alt back-recipe-button">
@@ -133,24 +128,23 @@
                         enctype="multipart/form-data" novalidate>
                         <div class="form-group">
                             <label>Recipe Name</label>
-                            <input type="text" class="form-control" placeholder="Chicken Pasta" name="name"
-                                value="Some Steak Recipe" required>
+                            <input type="text" class="form-control" placeholder="Chicken Pasta" name="name" required>
                             <div class="invalid-feedback">
                                 Please provide a valid recipe name.
                             </div>
                         </div>
                         <div class="form-group">
                             <label> Description</label>
-                            <textarea class="form-control" rows="2" name="description" required>Test Desc</textarea>
+                            <textarea class="form-control" rows="2" name="description" required
+                                placeholder="Fresh and light pasta, perfect for lunch or dinner!"></textarea>
                             <div class="invalid-feedback">
                                 Please provide a valid recipe description.
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-3">
                                 <label> Recipe Type</label>
                                 <select class="custom-select" name="recipe-type">
-                                    <!-- <option></option> -->
                                     <option value="meat">Meat</option>
                                     <option value="vegetarian">Vegetarian</option>
                                     <option value="vegan">Vegan</option>
@@ -160,30 +154,41 @@
                                     Please provide a valid Recipe Type
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Serving Size</label>
-                                <input type="number" class="form-control" placeholder="2" name="servings" value="2"
-                                    required>
+                                <input type="number" class="form-control" placeholder="2" name="servings" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid serving size
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Prep Time</label>
-                                <input type="number" class="form-control" placeholder="10" name="prepTime" value="10"
-                                    required>
+                                <input type="number" class="form-control" placeholder="10" name="prepTime" required>
                                 <div class="invalid-feedback">
                                     Please provide a Prep Time
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Cook Time</label>
-                                <input type="number" class="form-control" placeholder="20" name="cookTime" value="20"
-                                    required>
+                                <input type="number" class="form-control" placeholder="20" name="cookTime" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid recipe info.
                                 </div>
                             </div>
+                            <div class="form-group col-md-3">
+                                <label> Recipe Add-On</label>
+                                <select class="custom-select" name="recipe-addon">
+                                    <option value=""></option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please provide a valid Recipe Add-On
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label> Serving Suggestion</label>
+                            <textarea class="form-control" rows="2" name="servingSuggestion"
+                                placeholder="I would highly recommend letting your curry cool down slightly before serving. "></textarea>
                         </div>
                         <div class="form-group ingredients-group">
                             <label> Ingredients</label>
@@ -193,7 +198,7 @@
                             <input type="text" class="form-control mb-2 d-none" placeholder="Ingredients Component Name"
                                 name="ingredients-component1" value="Comp1">
                             <textarea class="form-control mb-2" rows="4" name="ingredients1"
-                                required>Test Desc</textarea>
+                                placeholder="4 Chicken Breasts &#10;200g Spagetti" required></textarea>
                             <div class="invalid-feedback">
                                 Please provide valid recipe ingredients.
                             </div>
@@ -212,7 +217,8 @@
                                 line.</small>
                             <input type="text" class="form-control mb-2 d-none" placeholder="Method Component Name"
                                 name="method-component1" value="Comp1">
-                            <textarea class="form-control mb-2" rows="4" name="method1" required>Test Desc</textarea>
+                            <textarea class="form-control mb-2" rows="4" name="method1" required
+                                placeholder="Fry Chicken Breasts &#10;Cook Spagetti"></textarea>
                             <div class="invalid-feedback">
                                 Please provide a valid recipe method.
                             </div>
@@ -222,10 +228,6 @@
                                 onclick="addInput('add-recipe-form','method')"> <i class="far fa-plus"></i>
                                 Add Method Component
                             </button>
-                        </div>
-                        <div class="form-group">
-                            <label> Serving Suggestion</label>
-                            <textarea class="form-control" rows="2" name="servingSuggestion">Test Desc</textarea>
                         </div>
                         <div class="form-group">
                             <label>Recipe Thumbnail Image</label>
@@ -288,10 +290,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-3">
                                 <label> Recipe Type</label>
                                 <select class="custom-select" name="recipe-type">
-                                    <!-- <option></option> -->
                                     <option value="meat">Meat</option>
                                     <option value="vegetarian">Vegetarian</option>
                                     <option value="vegan">Vegan</option>
@@ -301,27 +302,31 @@
                                     Please provide a valid Recipe Type
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Serving Size</label>
                                 <input type="number" class="form-control" name="servings" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid serving size
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Prep Time</label>
                                 <input type="number" class="form-control" name="prepTime" required>
                                 <div class="invalid-feedback">
                                     Please provide a Prep Time
                                 </div>
                             </div>
-                            <div class="form-group col-3">
+                            <div class="form-group col-md-2">
                                 <label> Cook Time</label>
                                 <input type="number" class="form-control" name="cookTime" required>
                                 <div class="invalid-feedback">
                                     Please provide a valid recipe info.
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label> Serving Suggestion</label>
+                            <textarea class="form-control" rows="2" name="servingSuggestion"></textarea>
                         </div>
                         <div class="form-group ingredients-group">
                             <label> Ingredients</label>
@@ -358,10 +363,6 @@
                                 onclick="addInput('edit-recipe-form','method')"> <i class="far fa-plus"></i>
                                 Add Method Component
                             </button>
-                        </div>
-                        <div class="form-group">
-                            <label> Serving Suggestion</label>
-                            <textarea class="form-control" rows="2" name="servingSuggestion"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Recipe Thumbnail Image</label>

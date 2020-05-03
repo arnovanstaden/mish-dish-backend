@@ -27,8 +27,9 @@ const filterRecipeType = (type) => {
     if (type == "all") {
         $(".home-grid-item").removeClass("hide-filter-recipe-type");
     } else {
+        console.log("filter " + type)
         for (i = 1; i <= recipesLength; i++) {
-            if ($(`.recipes-grid .home-grid-item:nth-child(${i})`).find(".recipe-type").html() != type) {
+            if ($(`.recipes-grid .home-grid-item:nth-child(${i})`).find(".recipe-type").html() !== type) {
                 $(`.recipes-grid .home-grid-item:nth-child(${i})`).addClass("hide-filter-recipe-type");
             } else {
                 $(`.recipes-grid .home-grid-item:nth-child(${i})`).removeClass("hide-filter-recipe-type");

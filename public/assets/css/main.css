@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,500,600,700&display=swap");
 /* Variables */
 
 :root {
@@ -25,6 +26,7 @@ html {
 }
 
 .my-button {
+    cursor: pointer;
     background-color: var(--dark-blue);
     border: 2px solid transparent;
     color: var(--light-blue);
@@ -53,13 +55,13 @@ html {
 }
 
 .my-button-alt {
+    cursor: pointer;
     background-color: transparent;
     border: 2px solid var(--dark-blue);
     color: var(--dark-blue);
     padding: 5px 10px;
     border-radius: 2px;
     font-size: 0.9rem;
-
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
@@ -79,6 +81,37 @@ html {
     background-color: var(--dark-blue);
     color: var(--light-blue);
     border: 2px solid transparent;
+}
+
+.addInputMethodMethodButton {
+    background-color: var(--dark-blue);
+    border: 2px solid transparent;
+    color: var(--light-blue);
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    transition: 0.4s;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    -o-transition: 0.4s;
+    cursor: pointer;
+}
+
+.addInputMethodMethodButton:hover {
+    background-color: transparent;
+    color: var(--dark-blue);
+    border: 2px solid var(--dark-blue);
+}
+
+.addInputGroup {
+    display: block;
+    margin: 20px;
+    text-align: right;
 }
 
 
@@ -242,7 +275,7 @@ input[type=number] {
 }
 
 .hide-filter-recipe-type {
-    display: none;
+    display: none !important;
 }
 
 /* notifications */
@@ -394,6 +427,11 @@ main.active {
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
 }
 
 .home-grid-item .recipe-img {
@@ -458,6 +496,7 @@ main.active {
     -o-border-radius: 5px;
     font-weight: 500;
     font-size: 0.7rem;
+    border: 1px solid var(--dark-blue);
 }
 
 .home-grid-item:hover .recipe-options {
@@ -496,6 +535,12 @@ form textarea,
 form select {
     border: 1px solid var(--dark-blue) !important;
     color: var(--dark-blue) !important;
+}
+
+form input::placeholder,
+form textarea::placeholder,
+form select::placeholder {
+    font-style: italic;
 }
 
 .form-group input:focus,

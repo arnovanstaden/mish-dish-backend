@@ -1,5 +1,5 @@
-const api_url = "https://the-mish-dish-backend.herokuapp.com";
-// const api_url = "http://localhost:3000";
+// const api_url = "https://the-mish-dish-backend.herokuapp.com";
+const api_url = "http://localhost:3000";
 
 // Get all Recipes
 function getRecipes(yes) {
@@ -24,7 +24,14 @@ function getRecipes(yes) {
                         </div>
                         <h4>${recipe.name}</h4>
                     </div>`
-                )
+                );
+
+                // Insert Add On Recipes
+                if (recipe.recipeType === "add-on") {
+                    $("select[name='recipe-addon']").append(
+                        `<option value="${recipe.recipeCode}">${recipe.name}</option>`
+                    )
+                }
             });
 
             if (yes === true) {
@@ -56,8 +63,7 @@ const showRecipes = (yes) => {
 $("#add-recipe-button").click(() => {
     $(".main-container").removeClass("active");
     $(`#main-recipes-add-container`).addClass("active");
-    $("#add-recipe-form").removeClass("was-validated")
-    // $("#add-recipe-form [type='file']").val("");
+    $("#add-recipe-form").removeClass("was-validated");
 });
 
 // Validate Form
@@ -210,7 +216,7 @@ const loadEditRecipe = (recipe) => {
     // Load Ingredients
     const ingredientKeys = Object.keys(recipe.ingredients);
     if (ingredientKeys.length === 1) {
-        $("#edit-recipe-form textarea[name='ingredients1']").val(recipe.ingredients["0"]);
+        $("#edit-recipe-form textarea[name='ingredients1']").val(recipe.ingredients["0"].join("\n"));
     } else {
         $("#edit-recipe-form input[name='ingredients-component1']").removeClass("d-none");
         let ingCount = 0
@@ -233,7 +239,7 @@ const loadEditRecipe = (recipe) => {
     // Load Method
     const methodKeys = Object.keys(recipe.method);
     if (methodKeys.length === 1) {
-        $("#edit-recipe-form textarea[name='method1']").val(recipe.method["0"]);
+        $("#edit-recipe-form textarea[name='method1']").val(recipe.method["0"].join("\n"));
     } else {
         $("#edit-recipe-form input[name='method-component1']").removeClass("d-none");
         let methodCount = 0;
