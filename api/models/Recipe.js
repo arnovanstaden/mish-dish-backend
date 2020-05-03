@@ -52,6 +52,9 @@ const recipeSchema = mongoose.Schema({
     },
     addOnCode: {
         type: String,
+    },
+    addOnName: {
+        type: String,
     }
 });
 

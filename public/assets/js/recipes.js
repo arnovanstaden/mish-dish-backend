@@ -10,6 +10,8 @@ function getRecipes(yes) {
             if (recipes.length < 1) {
                 $(".recipes-grid").append("<p> You have no recipes. Add a recipe! </p>")
             }
+            $("select[name='recipe-addon']").empty();
+            $("select[name='recipe-addon']").append("<option></option>");
             recipes.forEach(recipe => {
                 $(".recipes-grid").append(
                     ` <div class="col-sm-6 col-md-4 col-lg-3 home-grid-item" data-recipe-id="${recipe._id}">
@@ -112,6 +114,8 @@ function addRecipe() {
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#add-recipe-form [name='servingSuggestion']").val(),
+        addOnCode: $("#add-recipe-form [name='recipe-addon']").val(),
+        addOnName: $("#add-recipe-form [name='recipe-addon']").html(),
         ingredients: {},
         method: {}
     }
@@ -195,6 +199,7 @@ const getEditRecipes = (recipeID) => {
 }
 
 const loadEditRecipe = (recipe) => {
+    console.log(recipe)
     $("#main-recipes-edit-container .main-heading span").html(`${recipe.recipeCode} | ${recipe.name}`)
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
@@ -204,6 +209,11 @@ const loadEditRecipe = (recipe) => {
     $("#edit-recipe-form [name='prepTime']").val(recipe.prepTime);
     $("#edit-recipe-form [name='cookTime']").val(recipe.cookTime);
     $("#edit-recipe-form [name='servingSuggestion']").val(recipe.servingSuggestion);
+    if (recipe.hasOwnProperty("addOnCode")) {
+        console.log("load")
+        $(`#edit-recipe-form option[value="${recipe.addOnCode}"]`).attr('selected', 'selected');
+    };
+
 
     // Load Images
     $("#edit-thumbnail-image-container img").attr("src", recipe.recipeThumbnailUrl);
@@ -275,6 +285,8 @@ const saveEditRecipe = () => {
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
         cookTime: $("#edit-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#edit-recipe-form [name='servingSuggestion']").val(),
+        addOnCode: $("#edit-recipe-form [name='recipe-addon']").val(),
+        addOnName: $("#edit-recipe-form [name='recipe-addon']").html(),
         ingredients: {},
         method: {}
     }
@@ -317,7 +329,7 @@ const saveEditRecipe = () => {
             console.log(response.data);
             showRecipes(true);
             notify("Recipe Edited");
-            resetEditForm();
+            resetForms();
         })
         .catch(err => {
             console.log(err);
