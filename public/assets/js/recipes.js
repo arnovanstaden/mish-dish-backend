@@ -1,5 +1,5 @@
-const api_url = "";
-// const api_url = "http://localhost:3000";
+// const api_url = "https://the-mish-dish-backend.herokuapp.com";
+const api_url = "http://localhost:3000";
 
 // Get all Recipes
 function getRecipes(yes) {
@@ -64,6 +64,7 @@ $("#add-recipe-button").click(() => {
     $(".main-container").removeClass("active");
     $(`#main-recipes-add-container`).addClass("active");
     $("#add-recipe-form").removeClass("was-validated");
+    resetForms();
 });
 
 // Validate Form
@@ -354,10 +355,29 @@ $(document).ready(() => {
 // Back to Recipes Button
 $(".back-recipe-button").click(() => {
     showRecipes(true)
-    resetEditForm();
+    resetForms();
 });
 
-const resetEditForm = () => {
+const resetForms = () => {
+    $(`#add-recipe-form .ingredients-group`).empty();
+    $(`#add-recipe-form .method-group`).empty();
+    $("#add-recipe-images-container").empty();
+
+    $(`#add-recipe-form .ingredients-group`).append(
+        `<input type="text" class="form-control my-2 d-none"  Component Name" name="ingredients-component1"
+        required>`
+    );
+    $(`#add-recipe-form .ingredients-group`).append(
+        `<textarea class="form-control my-2" rows="4" name="ingredients1" required></textarea>`
+    );
+    $(`#add-recipe-form .method-group`).append(
+        `<input type="text" class="form-control my-2 d-none"  Component Name" name="method-component1"
+        required>`
+    );
+    $(`#add-recipe-form .method-group`).append(
+        `<textarea class="form-control my-2" rows="4" name="method1" required></textarea>`
+    );
+
     $(`#edit-recipe-form .ingredients-group`).empty();
     $(`#edit-recipe-form .method-group`).empty();
     $("#edit-recipe-images-container").empty();
