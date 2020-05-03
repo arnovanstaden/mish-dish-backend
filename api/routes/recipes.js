@@ -265,22 +265,22 @@ router.delete("/:recipeID", checkAuth, (req, res, next) => {
 
 // Delete all Recipes
 
-router.delete("/", checkAuth, (req, res, next) => {
-    Recipe.deleteMany()
-        .then(result => {
-            Recipe.counterReset('recipeNo', function (err) {});
-            res.status(200).json({
-                message: "All Recipes Deleted",
-                result: result
-            });
+// router.delete("/", (req, res, next) => {
+//     Recipe.deleteMany()
+//         .then(result => {
+//             Recipe.counterReset('recipeNo', function (err) {});
+//             res.status(200).json({
+//                 message: "All Recipes Deleted",
+//                 result: result
+//             });
 
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            })
-        })
-})
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.status(500).json({
+//                 error: err
+//             })
+//         })
+// })
 
 module.exports = router;
