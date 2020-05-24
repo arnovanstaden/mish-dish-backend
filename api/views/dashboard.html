@@ -178,55 +178,64 @@
                             <div class="form-group col-md-3">
                                 <label> Recipe Add-On</label>
                                 <select class="custom-select" name="recipe-addon">
+                                    <option value=""></option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please provide a valid Recipe Add-On
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group ingredients-group">
+                        <div class="form-group">
+                            <label> Serving Suggestion</label>
+                            <textarea class="form-control" rows="2" name="servingSuggestion"
+                                placeholder="I would highly recommend letting your curry cool down slightly before serving. "></textarea>
+                        </div>
+                        <div class="form-group ingredients-component-group">
                             <label> Ingredients</label>
                             <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
                                 line.
                             </small>
-                            <input type="text" class="form-control mb-2 d-none" placeholder="Ingredients Component Name"
-                                name="ingredients-component1">
-                            <textarea class="form-control mb-2" rows="4" name="ingredients1"
-                                placeholder="4 Chicken Breasts &#10;200g Spagetti" required></textarea>
-                            <div class="invalid-feedback">
-                                Please provide valid recipe ingredients.
+                            <div class="ingredients-component" id="ingredients-component-1">
+                                <input type="text" class="form-control mb-2 d-none col-11"
+                                    placeholder="Ingredients Component Name 1" name="component-name">
+
+                                <textarea class="form-control mb-2 col-12" rows="4" name="ingredients"
+                                    placeholder="4 Chicken Breasts &#10;200g Spagetti" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide valid recipe ingredients.
+                                </div>
                             </div>
                         </div>
-                        <div class="addInputGroup">
-                            <button type="button" class="addInputMethodMethodButton"
-                                onclick="addInput('add-recipe-form','ingredients')">
+                        <div class="addComponentGroup">
+                            <button type="button" class="addComponentButton"
+                                onclick="addComponent('add-recipe-form','ingredients')">
                                 <i class="far fa-plus"></i>
                                 Add Ingredients
                                 Component
                             </button>
                         </div>
-                        <div class="form-group method-group">
+                        <div class="form-group method-component-group">
                             <label> Method</label>
-                            <small class="form-text text-muted mt-0 mb-2">Put each step on its own
-                                line.</small>
-                            <input type="text" class="form-control mb-2 d-none" placeholder="Method Component Name"
-                                name="method-component1" value="Comp1">
-                            <textarea class="form-control mb-2" rows="4" name="method1" required
-                                placeholder="Fry Chicken Breasts &#10;Cook Spagetti"></textarea>
-                            <div class="invalid-feedback">
-                                Please provide a valid recipe method.
+                            <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
+                                line.
+                            </small>
+                            <div class="method-component" id="method-component-1">
+                                <input type="text" class="form-control mb-2 d-none col-11"
+                                    placeholder="Method Component Name 1" name="component-name">
+                                <textarea class="form-control mb-2 col-12" rows="4" name="method"
+                                    placeholder="Cook the chicken &#10;Boil the Spagetti" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide valid recipe method.
+                                </div>
                             </div>
                         </div>
-                        <div class="addInputGroup">
-                            <button type="button" class="addInputMethodMethodButton"
-                                onclick="addInput('add-recipe-form','method')"> <i class="far fa-plus"></i>
-                                Add Method Component
+                        <div class="addComponentGroup">
+                            <button type="button" class="addComponentButton"
+                                onclick="addComponent('add-recipe-form','method')">
+                                <i class="far fa-plus"></i>
+                                Add Method
+                                Component
                             </button>
-                        </div>
-                        <div class="form-group">
-                            <label> Serving Suggestion</label>
-                            <textarea class="form-control" rows="2" name="servingSuggestion"
-                                placeholder="I would highly recommend letting your curry cool down slightly before serving. "></textarea>
                         </div>
                         <div class="form-group">
                             <label>Recipe Thumbnail Image</label>
@@ -322,53 +331,55 @@
                                     Please provide a valid recipe info.
                                 </div>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label> Recipe Add-On</label>
-                                <select class="custom-select" name="recipe-addon">
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid Recipe Add-On
-                                </div>
-                            </div>
                         </div>
                         <div class="form-group">
                             <label> Serving Suggestion</label>
                             <textarea class="form-control" rows="2" name="servingSuggestion"></textarea>
                         </div>
-                        <div class="form-group ingredients-group">
+                        <div class="form-group ingredients-component-group">
                             <label> Ingredients</label>
                             <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
                                 line.
                             </small>
-                            <input type="text" class="form-control mb-2 d-none" name="ingredients-component1">
-                            <textarea class="form-control mb-2" rows="4" name="ingredients1"
-                                required>Test Desc</textarea>
-                            <div class="invalid-feedback">
-                                Please provide valid recipe ingredients.
+                            <div class="ingredients-component" id="ingredients-component-1">
+                                <input type="text" class="form-control mb-2 d-none col-11"
+                                    placeholder="Ingredients Component Name 1" name="component-name">
+                                <textarea class="form-control mb-2 col-12" rows="4" name="ingredients"
+                                    placeholder="4 Chicken Breasts &#10;200g Spagetti" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide valid recipe ingredients.
+                                </div>
                             </div>
                         </div>
-                        <div class="addInputGroup">
-                            <button type="button" class="addInputMethodMethodButton"
-                                onclick="addInput('edit-recipe-form','ingredients')">
+                        <div class="addComponentGroup">
+                            <button type="button" class="addComponentButton"
+                                onclick="addComponent('edit-recipe-form','ingredients')">
                                 <i class="far fa-plus"></i>
                                 Add Ingredients
                                 Component
                             </button>
                         </div>
-                        <div class="form-group method-group">
+                        <div class="form-group method-component-group">
                             <label> Method</label>
-                            <small class="form-text text-muted mt-0 mb-2">Put each step on its own
-                                line.</small>
-                            <input type="text" class="form-control mb-2 d-none" name="method-component1">
-                            <textarea class="form-control mb-2" rows="4" name="method1" required>Test Desc</textarea>
-                            <div class="invalid-feedback">
-                                Please provide a valid recipe method.
+                            <small class="form-text text-muted mt-0 mb-2">Put each ingredient on its own
+                                line.
+                            </small>
+                            <div class="method-component" id="method-component-1">
+                                <input type="text" class="form-control mb-2 d-none col-11"
+                                    placeholder="Method Component Name 1" name="component-name">
+                                <textarea class="form-control mb-2 col-12" rows="4" name="method"
+                                    placeholder="Cook the chicken &#10;Boil the Spagetti" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide valid recipe method.
+                                </div>
                             </div>
                         </div>
-                        <div class="addInputGroup">
-                            <button type="button" class="addInputMethodMethodButton"
-                                onclick="addInput('edit-recipe-form','method')"> <i class="far fa-plus"></i>
-                                Add Method Component
+                        <div class="addComponentGroup">
+                            <button type="button" class="addComponentButton"
+                                onclick="addComponent('edit-recipe-form','method')">
+                                <i class="far fa-plus"></i>
+                                Add Method
+                                Component
                             </button>
                         </div>
                         <div class="form-group">

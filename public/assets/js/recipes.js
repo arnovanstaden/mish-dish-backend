@@ -10,10 +10,8 @@ function getRecipes(yes) {
             if (recipes.length < 1) {
                 $(".recipes-grid").append("<p> You have no recipes. Add a recipe! </p>")
             }
-            $("select[name='recipe-addon']").empty();
-            $("select[name='recipe-addon']").append("<option></option>");
             recipes.forEach(recipe => {
-                $(".recipes-grid").append(
+                $(".recipes-grid").prepend(
                     ` <div class="col-sm-6 col-md-4 col-lg-3 home-grid-item" data-recipe-id="${recipe._id}">
                         <div class="recipe-img" style="background-image:url('${recipe.recipeThumbnailUrl}')">
                         <p class="recipe-type">${recipe.recipeType}</p>
@@ -66,7 +64,6 @@ $("#add-recipe-button").click(() => {
     $(".main-container").removeClass("active");
     $(`#main-recipes-add-container`).addClass("active");
     $("#add-recipe-form").removeClass("was-validated");
-    resetForms();
 });
 
 // Validate Form
@@ -114,36 +111,34 @@ function addRecipe() {
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#add-recipe-form [name='servingSuggestion']").val(),
-        addOnCode: $("#add-recipe-form [name='recipe-addon']").val(),
-        addOnName: $("#add-recipe-form [name='recipe-addon']").html(),
         ingredients: {},
         method: {}
     }
 
     // Get Ingredients
-    const ingredientInputCount = $("#add-recipe-form .ingredients-group").children("textarea").length;
+    const ingredientInputCount = $("#add-recipe-form .ingredients-component").length;
     let ingKey = "";
     for (i = 1; i <= ingredientInputCount; i++) {
         if (ingredientInputCount === 1) {
             ingKey = "0"
         } else {
-            ingKey = $(`#add-recipe-form .ingredients-group input[name='ingredients-component${i}']`).val();
+            ingKey = $(`#add-recipe-form #ingredients-component-${i} [name='component-name']`).val();
         }
-        let ingredients = $(`#add-recipe-form .ingredients-group textarea[name='ingredients${i}']`).val();
+        let ingredients = $(`#add-recipe-form #ingredients-component-${i} [name='ingredients']`).val();
         ingredients = ingredients.split("\n")
         recipe.ingredients[ingKey] = ingredients;
     }
 
     // Get Ingredients
-    const methodInputCount = $("#add-recipe-form .method-group").children("textarea").length;
+    const methodInputCount = $("#add-recipe-form .method-component").length;
     let methodKey = "";
     for (i = 1; i <= methodInputCount; i++) {
         if (methodInputCount === 1) {
             methodKey = "0"
         } else {
-            methodKey = $(`#add-recipe-form .method-group input[name='method-component${i}']`).val();
+            methodKey = $(`#add-recipe-form #method-component-${i} [name='component-name']`).val();
         }
-        let method = $(`#add-recipe-form .method-group textarea[name='method${i}']`).val();
+        let method = $(`#add-recipe-form #method-component-${i} [name='method']`).val();
         method = method.split("\n")
         recipe.method[methodKey] = method;
     }
@@ -165,8 +160,9 @@ function addRecipe() {
             data: formData,
         })
         .then((response) => {
-            notify("Recipe Added");
-            location.reload();
+            hideLoader();
+            location.reload()
+
         })
         .catch(err => {
             console.log(err);
@@ -199,7 +195,6 @@ const getEditRecipes = (recipeID) => {
 }
 
 const loadEditRecipe = (recipe) => {
-    console.log(recipe)
     $("#main-recipes-edit-container .main-heading span").html(`${recipe.recipeCode} | ${recipe.name}`)
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
@@ -209,11 +204,6 @@ const loadEditRecipe = (recipe) => {
     $("#edit-recipe-form [name='prepTime']").val(recipe.prepTime);
     $("#edit-recipe-form [name='cookTime']").val(recipe.cookTime);
     $("#edit-recipe-form [name='servingSuggestion']").val(recipe.servingSuggestion);
-    if (recipe.hasOwnProperty("addOnCode")) {
-        console.log("load")
-        $(`#edit-recipe-form option[value="${recipe.addOnCode}"]`).attr('selected', 'selected');
-    };
-
 
     // Load Images
     $("#edit-thumbnail-image-container img").attr("src", recipe.recipeThumbnailUrl);
@@ -226,46 +216,34 @@ const loadEditRecipe = (recipe) => {
     // Load Ingredients
     const ingredientKeys = Object.keys(recipe.ingredients);
     if (ingredientKeys.length === 1) {
-        $("#edit-recipe-form textarea[name='ingredients1']").val(recipe.ingredients["0"].join("\n"));
+        $("#edit-recipe-form #ingredients-component-1 textarea[name='ingredients']").val(recipe.ingredients["0"].join("\n"));
     } else {
-        $("#edit-recipe-form input[name='ingredients-component1']").removeClass("d-none");
-        let ingCount = 0
+        $("#edit-recipe-form #ingredients-component-1 [name='component-name']").removeClass("d-none");
+        let ingCount = 0;
         ingredientKeys.forEach(key => {
             ingCount++;
             if (ingCount > 1) {
-                $(`#edit-recipe-form .ingredients-group`).append(
-                    `<input type="text" class="form-control my-2"  Component Name" name="ingredients-component${ingCount}"
-                    required>`
-                );
-                $(`#edit-recipe-form .ingredients-group`).append(
-                    `<textarea class="form-control my-2" rows="4" name="ingredients${ingCount}" required></textarea>`
-                );
+                addComponent("edit-recipe-form", "ingredients")
             }
-            $(`#edit-recipe-form input[name='ingredients-component${ingCount}']`).val(key)
-            $(`#edit-recipe-form textarea[name='ingredients${ingCount}']`).val(recipe.ingredients[key].join("\n"))
+            $(`#edit-recipe-form #ingredients-component-${ingCount} [name='component-name']`).val(key)
+            $(`#edit-recipe-form #ingredients-component-${ingCount} textarea[name='ingredients']`).val(recipe.ingredients[key].join("\n"));
         })
     }
 
     // Load Method
     const methodKeys = Object.keys(recipe.method);
     if (methodKeys.length === 1) {
-        $("#edit-recipe-form textarea[name='method1']").val(recipe.method["0"].join("\n"));
+        $("#edit-recipe-form #method-component-1 textarea[name='method']").val(recipe.method["0"].join("\n"));
     } else {
-        $("#edit-recipe-form input[name='method-component1']").removeClass("d-none");
+        $("#edit-recipe-form #method-component-1 [name='component-name']").removeClass("d-none");
         let methodCount = 0;
         methodKeys.forEach(key => {
             methodCount++;
             if (methodCount > 1) {
-                $(`#edit-recipe-form .method-group`).append(
-                    `<input type="text" class="form-control my-2"  Component Name" name="method-component${methodCount}"
-                    required>`
-                );
-                $(`#edit-recipe-form .method-group`).append(
-                    `<textarea class="form-control my-2" rows="4" name="method${methodCount}" required></textarea>`
-                );
+                addComponent("edit-recipe-form", "method")
             }
-            $(`#edit-recipe-form input[name='method-component${methodCount}']`).val(key)
-            $(`#edit-recipe-form textarea[name='method${methodCount}']`).val(recipe.method[key].join("\n"))
+            $(`#edit-recipe-form #method-component-${methodCount} [name='component-name']`).val(key)
+            $(`#edit-recipe-form #method-component-${methodCount} textarea[name='method']`).val(recipe.method[key].join("\n"));
         })
     }
 }
@@ -285,36 +263,35 @@ const saveEditRecipe = () => {
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
         cookTime: $("#edit-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#edit-recipe-form [name='servingSuggestion']").val(),
-        addOnCode: $("#edit-recipe-form [name='recipe-addon']").val(),
-        addOnName: $("#edit-recipe-form [name='recipe-addon']").html(),
         ingredients: {},
         method: {}
     }
 
     // Get Ingredients
-    const ingredientInputCount = $("#edit-recipe-form .ingredients-group").children("textarea").length;
+    // Get Ingredients
+    const ingredientInputCount = $("#edit-recipe-form .ingredients-component").length;
     let ingKey = "";
     for (i = 1; i <= ingredientInputCount; i++) {
         if (ingredientInputCount === 1) {
             ingKey = "0"
         } else {
-            ingKey = $(`#edit-recipe-form .ingredients-group input[name='ingredients-component${i}']`).val();
+            ingKey = $(`#edit-recipe-form #ingredients-component-${i} [name='component-name']`).val();
         }
-        let ingredients = $(`#edit-recipe-form .ingredients-group textarea[name='ingredients${i}']`).val();
+        let ingredients = $(`#edit-recipe-form #ingredients-component-${i} [name='ingredients']`).val();
         ingredients = ingredients.split("\n")
         recipe.ingredients[ingKey] = ingredients;
     }
 
     // Get Ingredients
-    const methodInputCount = $("#edit-recipe-form .method-group").children("textarea").length;
+    const methodInputCount = $("#edit-recipe-form .method-component").length;
     let methodKey = "";
     for (i = 1; i <= methodInputCount; i++) {
         if (methodInputCount === 1) {
             methodKey = "0"
         } else {
-            methodKey = $(`#edit-recipe-form .method-group input[name='method-component${i}']`).val();
+            methodKey = $(`#edit-recipe-form #method-component-${i} [name='component-name']`).val();
         }
-        let method = $(`#edit-recipe-form .method-group textarea[name='method${i}']`).val();
+        let method = $(`#edit-recipe-form #method-component-${i} [name='method']`).val();
         method = method.split("\n")
         recipe.method[methodKey] = method;
     }
@@ -328,8 +305,7 @@ const saveEditRecipe = () => {
         .then((response) => {
             console.log(response.data);
             showRecipes(true);
-            notify("Recipe Edited");
-            resetForms();
+            location.reload()
         })
         .catch(err => {
             console.log(err);
@@ -365,29 +341,48 @@ $(document).ready(() => {
 
 // Back to Recipes Button
 $(".back-recipe-button").click(() => {
-    showRecipes(true)
-    resetForms();
+    location.reload()
 });
 
-const resetForms = () => {
-    $(`#edit-recipe-form .ingredients-group textarea`).remove();
-    $(`#edit-recipe-form .ingredients-group textarea`).remove();
-    $(`#edit-recipe-form .method-group input`).remove();
-    $(`#edit-recipe-form .method-group input`).remove();
-    $("#edit-recipe-images-container").empty();
 
-    $(`#edit-recipe-form .ingredients-group`).append(
-        `<input type="text" class="form-control my-2 d-none" placeholder="Component Name" name="ingredients-component1"
-        required>`
+const addComponent = (form, type) => {
+    const count = $(`#${form} .${type}-component`).length;
+
+    if (count === 1) {
+        $(`#${type}-component-1 input[name='component-name']`).removeClass("d-none")
+    }
+
+    $(`#${form} .${type}-component-group`).append(
+        `
+        <div class="${type}-component" id="${type}-component-${count+1}">
+            <input type="text" class="form-control mb-2 col-11"
+                placeholder="${type} Component Name ${count+1}" name="component-name">
+            <textarea class="form-control mb-2 col-12" rows="4" name="${type}"
+                placeholder="" required></textarea>
+            <div class="invalid-feedback">
+                Please provide valid recipe ${type}.
+            </div>
+        </div>
+        `
     );
-    $(`#edit-recipe-form .ingredients-group`).append(
-        `<textarea class="form-control my-2" rows="4" name="ingredients1" required></textarea>`
-    );
-    $(`#edit-recipe-form .method-group`).append(
-        `<input type="text" class="form-control my-2 d-none" placeholder="Component Name" name="method-component1"
-        required>`
-    );
-    $(`#edit-recipe-form .method-group`).append(
-        `<textarea class="form-control my-2" rows="4" name="method1" required></textarea>`
-    );
+
+    addComponentDeleteButton(form, type, count)
 }
+
+const addComponentDeleteButton = (form, type) => {
+    console.log(form, type)
+    $(`#${form} .${type}-component .component-delete-button`).remove();
+
+    $(`#${form} .${type}-component:last-child() input`).after(
+        `<div class="col-1 component-delete-button" >
+         <i class="far fa-trash-alt"></i>
+         <vdiv>
+        `
+    )
+}
+
+$(document).on("click", ".component-delete-button", function () {
+    let parent = $(this).parent().attr("class");
+    let form = $(this).closest("form").attr("id");
+    $(this).parent().remove();
+})

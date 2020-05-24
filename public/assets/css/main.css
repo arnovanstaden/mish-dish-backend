@@ -83,7 +83,7 @@ html {
     border: 2px solid transparent;
 }
 
-.addInputMethodMethodButton {
+.addComponentButton {
     background-color: var(--dark-blue);
     border: 2px solid transparent;
     color: var(--light-blue);
@@ -102,16 +102,29 @@ html {
     cursor: pointer;
 }
 
-.addInputMethodMethodButton:hover {
+.addComponentButton:hover {
     background-color: transparent;
     color: var(--dark-blue);
     border: 2px solid var(--dark-blue);
 }
 
-.addInputGroup {
+.addComponentGroup {
     display: block;
     margin: 20px;
     text-align: right;
+}
+
+.ingredients-component,
+.method-component {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ingredients-component i:hover,
+.method-component i:hover {
+    cursor: pointer;
+    color: red;
 }
 
 
@@ -631,12 +644,6 @@ form label {
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     margin-right: 20px;
-}
-
-.ingredients-group input,
-.method-group input {
-    font-weight: 500;
-
 }
 
 /* ------------------- */
