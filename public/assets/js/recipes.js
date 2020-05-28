@@ -195,6 +195,7 @@ const getEditRecipes = (recipeID) => {
 }
 
 const loadEditRecipe = (recipe) => {
+    console.log(recipe)
     $("#main-recipes-edit-container .main-heading span").html(`${recipe.recipeCode} | ${recipe.name}`)
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
