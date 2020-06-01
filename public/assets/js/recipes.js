@@ -11,9 +11,11 @@ function getRecipes(yes) {
                 $(".recipes-grid").append("<p> You have no recipes. Add a recipe! </p>")
             }
             recipes.forEach(recipe => {
+                let recipeThumbnail = recipe.recipeThumbnailUrl;
+                recipeThumbnail = recipeThumbnail.replace("upload/", "upload/w_300/f_auto/");
                 $(".recipes-grid").prepend(
                     ` <div class="col-sm-6 col-md-4 col-lg-3 home-grid-item" data-recipe-id="${recipe._id}">
-                        <div class="recipe-img" style="background-image:url('${recipe.recipeThumbnailUrl}')">
+                        <div class="recipe-img" style="background-image:url('${recipeThumbnail}')">
                         <p class="recipe-type">${recipe.recipeType}</p>
                             <div class="recipe-options">
                                 <a id="edit-recipe-button"><i class="far fa-edit"></i></a>
@@ -207,10 +209,12 @@ const loadEditRecipe = (recipe) => {
     $("#edit-recipe-form [name='servingSuggestion']").val(recipe.servingSuggestion);
 
     // Load Images
+
     $("#edit-thumbnail-image-container img").attr("src", recipe.recipeThumbnailUrl);
     recipe.recipeImageUrls.forEach(image => {
+        recipeThumbnail = image.replace("upload/", "upload/f_auto/");
         $("#edit-recipe-images-container").append(
-            `<img src="${image}">`
+            `<img src="${recipeThumbnail}">`
         )
     });
 
