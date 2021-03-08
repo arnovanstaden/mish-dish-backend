@@ -62,7 +62,7 @@ recipeSchema.plugin(AutoIncrement, {
     inc_field: 'recipeNo'
 });
 
-productSchema.set('toJSON', {
+recipeSchema.set('toJSON', {
     virtuals: true
 });
 
