@@ -62,4 +62,9 @@ recipeSchema.plugin(AutoIncrement, {
     inc_field: 'recipeNo'
 });
 
+productSchema.set('toJSON', {
+    virtuals: true
+});
+
+
 module.exports = mongoose.model("Recipe", recipeSchema);
