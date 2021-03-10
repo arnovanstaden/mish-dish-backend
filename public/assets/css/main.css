@@ -666,3 +666,45 @@ form label {
     font-size: 1.5rem;
     font-weight: 500;
 }
+
+/* Tags
+ */
+
+
+/* Tags */
+.bootstrap-tagsinput {
+    border: 1px solid var(--dark-blue);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.tags-input .tag {
+    font-size: 0.9rem;
+    background-color: var(--dark-blue);
+    color: var(--grey);
+    padding: 4px 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.tags-input input {
+    border: none !important;
+}
+
+.tags-input span[data-role="remove"] {
+    color: white;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+    content: "x";
+    padding: 0px 2px;
+}

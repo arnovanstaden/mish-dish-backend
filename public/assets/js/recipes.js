@@ -16,7 +16,7 @@ function getRecipes(yes) {
                 $(".recipes-grid").prepend(
                     ` <div class="col-sm-6 col-md-4 col-lg-3 home-grid-item" data-recipe-id="${recipe._id}">
                         <div class="recipe-img" style="background-image:url('${recipeThumbnail}')">
-                        <p class="recipe-type">${recipe.recipeType}</p>
+                        <p class="recipe-type">${recipe.diet}</p>
                             <div class="recipe-options">
                                 <a id="edit-recipe-button"><i class="far fa-edit"></i></a>
                                 <a href="https://update.themishdish.co.za/recipe.html#${recipe.recipeCode}" target="blank">
@@ -108,13 +108,14 @@ function addRecipe() {
     const recipe = {
         name: $("#add-recipe-form [name='name']").val(),
         description: $("#add-recipe-form [name='description']").val(),
-        recipeType: $("#add-recipe-form [name='recipe-type']").val(),
+        diet: $("#add-recipe-form [name='diet']").val(),
         servings: $("#add-recipe-form [name='servings']").val(),
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#add-recipe-form [name='servingSuggestion']").val(),
         ingredients: {},
-        method: {}
+        method: {},
+        tags: $("#add-recipe-form #tags select").val(),
     }
 
     // Get Ingredients
@@ -157,10 +158,10 @@ function addRecipe() {
     console.log(recipe)
     // Post Recipe
     axios({
-            method: 'post',
-            url: `${api_url}/recipes`,
-            data: formData,
-        })
+        method: 'post',
+        url: `${api_url}/recipes`,
+        data: formData,
+    })
         .then((response) => {
             hideLoader();
             location.reload()
@@ -202,7 +203,7 @@ const loadEditRecipe = (recipe) => {
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
     $("#edit-recipe-form [name='description']").val(recipe.description);
-    $("#edit-recipe-form [name='recipe-type']").val(recipe.recipeType);
+    $("#edit-recipe-form [name='diet']").val(recipe.diet);
     $("#edit-recipe-form [name='servings']").val(recipe.servings);
     $("#edit-recipe-form [name='prepTime']").val(recipe.prepTime);
     $("#edit-recipe-form [name='cookTime']").val(recipe.cookTime);
@@ -251,6 +252,11 @@ const loadEditRecipe = (recipe) => {
             $(`#edit-recipe-form #method-component-${methodCount} textarea[name='method']`).val(recipe.method[key].join("\n"));
         })
     }
+
+    // Load Tags
+    recipe.tags.forEach(tag => {
+        $("#edit-recipe-form #tags select").tagsinput('add', tag);
+    })
 }
 
 
@@ -263,13 +269,14 @@ const saveEditRecipe = () => {
     const recipe = {
         name: $("#edit-recipe-form [name='name']").val(),
         description: $("#edit-recipe-form [name='description']").val(),
-        recipeType: $("#edit-recipe-form [name='recipe-type']").val(),
+        diet: $("#edit-recipe-form [name='diet']").val(),
         servings: $("#edit-recipe-form [name='servings']").val(),
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
         cookTime: $("#edit-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#edit-recipe-form [name='servingSuggestion']").val(),
         ingredients: {},
-        method: {}
+        method: {},
+        tags: $("#edit-recipe-form #tags select").val(),
     }
 
     // Get Ingredients
@@ -303,10 +310,10 @@ const saveEditRecipe = () => {
 
     // Patch Recipe
     axios({
-            method: 'patch',
-            url: `${api_url}/recipes/${recipeID}`,
-            data: recipe,
-        })
+        method: 'patch',
+        url: `${api_url}/recipes/${recipeID}`,
+        data: recipe,
+    })
         .then((response) => {
             console.log(response.data);
             showRecipes(true);
@@ -325,9 +332,9 @@ const deleteRecipe = () => {
     recipeID = $("#main-recipes-edit-container").attr("data-recipe-id");
 
     axios({
-            method: 'delete',
-            url: `${api_url}/recipes/${recipeID}`,
-        })
+        method: 'delete',
+        url: `${api_url}/recipes/${recipeID}`,
+    })
         .then((response) => {
             console.log(response.data);
             showRecipes(true);
@@ -359,9 +366,9 @@ const addComponent = (form, type) => {
 
     $(`#${form} .${type}-component-group`).append(
         `
-        <div class="${type}-component" id="${type}-component-${count+1}">
+        <div class="${type}-component" id="${type}-component-${count + 1}">
             <input type="text" class="form-control mb-2 col-11"
-                placeholder="${type} Component Name ${count+1}" name="component-name">
+                placeholder="${type} Component Name ${count + 1}" name="component-name">
             <textarea class="form-control mb-2 col-12" rows="4" name="${type}"
                 placeholder="" required></textarea>
             <div class="invalid-feedback">

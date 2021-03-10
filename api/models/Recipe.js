@@ -15,6 +15,14 @@ const recipeSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    diet: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
     ingredients: {
         type: mongoose.Schema.Types.Mixed,
         required: true
@@ -25,10 +33,6 @@ const recipeSchema = mongoose.Schema({
     },
     servings: {
         type: String,
-        required: true
-    },
-    prepTime: {
-        type: Number,
         required: true
     },
     cookTime: {
@@ -50,11 +54,8 @@ const recipeSchema = mongoose.Schema({
     recipeImageUrls: {
         type: Array
     },
-    addOnCode: {
-        type: String,
-    },
-    addOnName: {
-        type: String,
+    tags: {
+        type: Array
     }
 });
 

@@ -35,8 +35,8 @@ router.get("/", (req, res, next) => {
 // Get Single Recipe
 router.get("/:recipeID", (req, res, next) => {
     Recipe.findById({
-            _id: req.params.recipeID
-        })
+        _id: req.params.recipeID
+    })
         .then(recipe => {
             if (recipe) {
                 res.status(200).send(recipe)
@@ -57,8 +57,8 @@ router.get("/:recipeID", (req, res, next) => {
 // Get Single Recipe By Code
 router.get("/recipeCode/:recipeCode", (req, res, next) => {
     Recipe.findOne({
-            recipeCode: req.params.recipeCode
-        })
+        recipeCode: req.params.recipeCode
+    })
         .then(recipe => {
             if (recipe) {
                 res.status(200).send(recipe)
@@ -112,14 +112,14 @@ router.post("/", checkAuth, upload.fields([{
     recipe.save()
         .then(recipe => {
             Recipe.findByIdAndUpdate({
-                    _id: recipe._id
-                }, {
-                    $set: {
-                        recipeCode: `MD${recipe.recipeNo}`
-                    }
-                }, {
-                    new: true
-                })
+                _id: recipe._id
+            }, {
+                $set: {
+                    recipeCode: `MD${recipe.recipeNo}`
+                }
+            }, {
+                new: true
+            })
                 .then(recipe => {
                     uploadThumbImg(recipe.recipeCode, recipe._id);
                 })
@@ -142,27 +142,27 @@ router.post("/", checkAuth, upload.fields([{
         const thumbnail = req.files.thumbnail[0];
         datauri.format(thumbnail.mimetype, thumbnail.buffer);
         cloudinary.v2.uploader.upload(datauri.content, {
-                public_id: `The-Mish-Dish/${recipeCode}/thumbnail`,
-                transformation: [{
-                    width: 250,
-                    height: 250,
-                    crop: "lfill",
-                    quality: 90
-                }]
-            },
+            public_id: `The-Mish-Dish/${recipeCode}/thumbnail`,
+            transformation: [{
+                width: 250,
+                height: 250,
+                crop: "lfill",
+                quality: 90
+            }]
+        },
             function (error, result) {
                 console.log(result, error);
                 Recipe.findByIdAndUpdate({
-                        _id: recipeID
-                    }, {
-                        $set: {
-                            recipeThumbnailUrl: result.secure_url
-                        }
-                    }, {
-                        new: true
-                    }).then(result => {
-                        uploadRecipeImgs(recipeCode, recipeID);
-                    })
+                    _id: recipeID
+                }, {
+                    $set: {
+                        recipeThumbnailUrl: result.secure_url
+                    }
+                }, {
+                    new: true
+                }).then(result => {
+                    uploadRecipeImgs(recipeCode, recipeID);
+                })
                     .catch(err => {
                         console.log(err);
                         res.status(500).json({
@@ -179,12 +179,12 @@ router.post("/", checkAuth, upload.fields([{
             const imageToLoad = req.files.recipeImages[i];
             datauri.format(imageToLoad.mimetype, imageToLoad.buffer);
             cloudinary.v2.uploader.upload(datauri.content, {
-                    public_id: `The-Mish-Dish/${recipeCode}/${i+1}`,
-                    transformation: [{
-                        height: 1080,
-                        quality: 40
-                    }]
-                },
+                public_id: `The-Mish-Dish/${recipeCode}/${i + 1}`,
+                transformation: [{
+                    height: 1080,
+                    quality: 40
+                }]
+            },
                 function (error, result) {
                     console.log(result, error);
                     uploadCounter++;
@@ -193,19 +193,19 @@ router.post("/", checkAuth, upload.fields([{
                     // Send Response to Client
                     if (uploadCounter == (req.files.recipeImages.length)) {
                         Recipe.findByIdAndUpdate({
-                                _id: recipeID
-                            }, {
-                                $set: {
-                                    recipeImageUrls: imageURLs
-                                }
-                            }, {
-                                new: true
-                            }).then(result => {
-                                console.log("Recipe Image URLs Added");
-                                res.status(200).json({
-                                    message: "Recipe Added"
-                                })
+                            _id: recipeID
+                        }, {
+                            $set: {
+                                recipeImageUrls: imageURLs
+                            }
+                        }, {
+                            new: true
+                        }).then(result => {
+                            console.log("Recipe Image URLs Added");
+                            res.status(200).json({
+                                message: "Recipe Added"
                             })
+                        })
                             .catch(err => {
                                 console.log(err);
                                 res.status(500).json({
@@ -220,16 +220,14 @@ router.post("/", checkAuth, upload.fields([{
     }
 });
 
-
 // Change Singe Recipe
 router.patch("/:recipeID", checkAuth, (req, res, next) => {
     Recipe.findByIdAndUpdate({
-            _id: req.params.recipeID
-        }, req.body, {
-            new: true
-        })
+        _id: req.params.recipeID
+    }, req.body, {
+        new: true
+    })
         .then(recipe => {
-
             res.status(200).json({
                 message: "Recipe Updated",
                 recipe: recipe
@@ -247,8 +245,8 @@ router.patch("/:recipeID", checkAuth, (req, res, next) => {
 // Delete one Recipe
 router.delete("/:recipeID", checkAuth, (req, res, next) => {
     Recipe.findOneAndDelete({
-            _id: req.params.recipeID
-        })
+        _id: req.params.recipeID
+    })
         .then(recipe => {
             res.status(200).json({
                 message: "Recipe Deleted",
@@ -282,5 +280,8 @@ router.delete("/:recipeID", checkAuth, (req, res, next) => {
 //             })
 //         })
 // })
+
+
+
 
 module.exports = router;

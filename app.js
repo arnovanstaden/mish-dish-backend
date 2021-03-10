@@ -15,6 +15,7 @@ const recipeRoutes = require("./api/routes/recipes");
 const authRoutes = require("./api/routes/auth")
 const userRoutes = require("./api/routes/users")
 
+const Recipe = require("./api/models/Recipe");
 
 // -----------------------------
 // SETUP
@@ -28,9 +29,9 @@ const store = new mongoDBStore({
 
 // Database
 mongoose.connect(DATABSE_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
     .then(() => {
         console.log("Mongoose Connected");
     })
@@ -90,4 +91,8 @@ app.use((error, req, res, next) => {
     })
 })
 
-module.exports = app
+module.exports = app;
+
+
+
+
