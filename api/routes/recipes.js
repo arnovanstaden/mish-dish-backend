@@ -6,7 +6,8 @@ const multer = require("multer");
 const cloudinary = require("cloudinary");
 const DataURI = require('datauri');
 const checkAuth = require("../middleware/check-auth");
-const Recipe = require("../models/Recipe")
+const Recipe = require("../models/Recipe");
+const { rebuildFrontend } = require("../utils/utils")
 
 // Config
 cloudinary.config({
@@ -202,6 +203,7 @@ router.post("/", checkAuth, upload.fields([{
                             new: true
                         }).then(result => {
                             console.log("Recipe Image URLs Added");
+                            rebuildFrontend()
                             res.status(200).json({
                                 message: "Recipe Added"
                             })
@@ -228,6 +230,7 @@ router.patch("/:recipeID", checkAuth, (req, res, next) => {
         new: true
     })
         .then(recipe => {
+            rebuildFrontend()
             res.status(200).json({
                 message: "Recipe Updated",
                 recipe: recipe
@@ -248,6 +251,7 @@ router.delete("/:recipeID", checkAuth, (req, res, next) => {
         _id: req.params.recipeID
     })
         .then(recipe => {
+            rebuildFrontend()
             res.status(200).json({
                 message: "Recipe Deleted",
                 recipe: recipe

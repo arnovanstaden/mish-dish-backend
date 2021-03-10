@@ -7,7 +7,8 @@ const path = require("path");
 const appRoot = path.dirname(require.main.filename);
 const session = require("express-session");
 const mongoDBStore = require("connect-mongodb-session")(session);
-const checkAuth = require("./api/middleware/check-auth")
+const checkAuth = require("./api/middleware/check-auth");
+const { rebuildFrontend } = require("./api/utils/utils")
 
 
 // Import Routes
@@ -92,5 +93,4 @@ app.use((error, req, res, next) => {
 })
 
 module.exports = app;
-
 
