@@ -156,7 +156,7 @@ router.post("/", checkAuth, upload.fields([{
                     _id: recipeID
                 }, {
                     $set: {
-                        recipeThumbnailUrl: result.secure_url
+                        thumbnail: result.secure_url
                     }
                 }, {
                     new: true
@@ -196,7 +196,7 @@ router.post("/", checkAuth, upload.fields([{
                             _id: recipeID
                         }, {
                             $set: {
-                                recipeImageUrls: imageURLs
+                                images: imageURLs
                             }
                         }, {
                             new: true

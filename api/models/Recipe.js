@@ -48,10 +48,10 @@ const recipeSchema = mongoose.Schema({
     recipeCode: {
         type: String
     },
-    recipeThumbnailUrl: {
+    thumbnail: {
         type: String
     },
-    recipeImageUrls: {
+    images: {
         type: Array
     },
     tags: {
