@@ -94,3 +94,11 @@ app.use((error, req, res, next) => {
 
 module.exports = app;
 
+
+// Recipe.updateMany(
+//     {},
+//     { "$set": { type: "main meal" } },
+//     (err, result) => {
+//         console.log(result)
+//     }
+// )

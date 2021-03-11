@@ -1,5 +1,5 @@
 const api_url = "https://the-mish-dish-backend.herokuapp.com";
-// const api_url = "http://localhost:3000";
+// const api_url = "http://localhost:8000";
 
 // Get all Recipes
 function getRecipes(yes) {
@@ -109,6 +109,7 @@ function addRecipe() {
         name: $("#add-recipe-form [name='name']").val(),
         description: $("#add-recipe-form [name='description']").val(),
         diet: $("#add-recipe-form [name='diet']").val(),
+        type: $("#add-recipe-form [name='type']").val(),
         servings: $("#add-recipe-form [name='servings']").val(),
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
@@ -203,6 +204,7 @@ const loadEditRecipe = (recipe) => {
     $("#main-recipes-edit-container .main-heading span").html(`${recipe.recipeCode} | ${recipe.name}`)
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
+    $("#edit-recipe-form [name='type']").val(recipe.type);
     $("#edit-recipe-form [name='description']").val(recipe.description);
     $("#edit-recipe-form [name='diet']").val(recipe.diet);
     $("#edit-recipe-form [name='servings']").val(recipe.servings);
@@ -271,6 +273,7 @@ const saveEditRecipe = () => {
     const recipe = {
         name: $("#edit-recipe-form [name='name']").val(),
         description: $("#edit-recipe-form [name='description']").val(),
+        type: $("#edit-recipe-form [name='type']").val(),
         diet: $("#edit-recipe-form [name='diet']").val(),
         servings: $("#edit-recipe-form [name='servings']").val(),
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
