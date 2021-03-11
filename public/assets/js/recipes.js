@@ -113,9 +113,10 @@ function addRecipe() {
         prepTime: $("#add-recipe-form [name='prepTime']").val(),
         cookTime: $("#add-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#add-recipe-form [name='servingSuggestion']").val(),
+        recommended: $("#add-recipe-form [name='recommended']").val() == "true" ? true : false,
+        tags: $("#add-recipe-form #tags select").val(),
         ingredients: {},
         method: {},
-        tags: $("#add-recipe-form #tags select").val(),
     }
 
     // Get Ingredients
@@ -198,7 +199,7 @@ const getEditRecipes = (recipeID) => {
 }
 
 const loadEditRecipe = (recipe) => {
-    console.log(recipe)
+    console.log(recipe);
     $("#main-recipes-edit-container .main-heading span").html(`${recipe.recipeCode} | ${recipe.name}`)
     $("#main-recipes-edit-container").attr("data-recipe-id", recipe._id)
     $("#edit-recipe-form [name='name']").val(recipe.name);
@@ -208,6 +209,7 @@ const loadEditRecipe = (recipe) => {
     $("#edit-recipe-form [name='prepTime']").val(recipe.prepTime);
     $("#edit-recipe-form [name='cookTime']").val(recipe.cookTime);
     $("#edit-recipe-form [name='servingSuggestion']").val(recipe.servingSuggestion);
+    $("#edit-recipe-form [name='recommended']").val(recipe.recommended.toString());
 
     // Load Images
 
@@ -274,6 +276,7 @@ const saveEditRecipe = () => {
         prepTime: $("#edit-recipe-form [name='prepTime']").val(),
         cookTime: $("#edit-recipe-form [name='cookTime']").val(),
         servingSuggestion: $("#edit-recipe-form [name='servingSuggestion']").val(),
+        recommended: $("#edit-recipe-form [name='recommended']").val() == 'true',
         ingredients: {},
         method: {},
         tags: $("#edit-recipe-form #tags select").val(),

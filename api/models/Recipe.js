@@ -59,6 +59,9 @@ const recipeSchema = mongoose.Schema({
     },
     likes: {
         type: Number
+    },
+    recommended: {
+        type: Boolean
     }
 });
 
