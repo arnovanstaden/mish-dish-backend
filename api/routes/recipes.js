@@ -106,7 +106,11 @@ router.post("/", checkAuth, upload.fields([{
         servings: recipeBody.servings,
         prepTime: recipeBody.prepTime,
         cookTime: recipeBody.cookTime,
-        servingSuggestion: recipeBody.servingSuggestion
+        servingSuggestion: recipeBody.servingSuggestion,
+        type: recipeBody.type,
+        tags: recipeBody.tags,
+        diet: recipeBody.diet,
+        recommended: recipeBody.recommended
     });
 
     // Save Recipe in DB
@@ -145,10 +149,10 @@ router.post("/", checkAuth, upload.fields([{
         cloudinary.v2.uploader.upload(datauri.content, {
             public_id: `The-Mish-Dish/${recipeCode}/thumbnail`,
             transformation: [{
-                width: 250,
-                height: 250,
+                width: 1000,
+                height: 1000,
                 crop: "lfill",
-                quality: 90
+                quality: 1000
             }]
         },
             function (error, result) {
@@ -183,7 +187,7 @@ router.post("/", checkAuth, upload.fields([{
                 public_id: `The-Mish-Dish/${recipeCode}/${i + 1}`,
                 transformation: [{
                     height: 1080,
-                    quality: 40
+                    quality: 1000
                 }]
             },
                 function (error, result) {
@@ -218,6 +222,148 @@ router.post("/", checkAuth, upload.fields([{
                 });
 
 
+        }
+    }
+});
+
+
+// Replace Recipe Thumbnail
+
+router.patch("/recipeThumbnail", checkAuth, upload.fields([{
+    name: "thumbnail"
+}]), (req, res, next) => {
+    console.log("Replacing Recipe Thumbnail")
+    Recipe.findById({
+        _id: req.body.recipeID
+    })
+        .then(recipe => {
+            if (recipe) {
+                replaceImage(recipe)
+            } else {
+                res.status(404).json({
+                    message: "Recipe does not exist"
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                error: err
+            })
+        });
+
+    const replaceImage = (recipe) => {
+        const thumbnail = req.files.thumbnail[0];
+        datauri.format(thumbnail.mimetype, thumbnail.buffer);
+        cloudinary.v2.uploader.upload(datauri.content, {
+            public_id: `The-Mish-Dish/${recipe.recipeCode}/thumbnail`,
+            transformation: [{
+                width: 1000,
+                quality: 100,
+                overwrite: true,
+                invalidate: true
+            }]
+        },
+            function (error, result) {
+                Recipe.findByIdAndUpdate({
+                    _id: recipe._id
+                }, {
+                    $set: {
+                        thumbnail: result.secure_url
+                    }
+                }, {
+                    new: true
+                }).then(result => {
+                    rebuildFrontend()
+                    res.status(200).json({
+                        message: "Recipe Thumbnail Image Updated",
+                        recipe: result
+                    })
+                })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            error: err
+                        })
+                    })
+
+            });
+    }
+});
+
+
+// Replace Recipe Images
+
+router.patch("/recipeImages", checkAuth, upload.fields([{
+    name: "recipeImages"
+}]), (req, res, next) => {
+    console.log("Replacing Recipe Images")
+    Recipe.findById({
+        _id: req.body.recipeID
+    })
+        .then(recipe => {
+            if (recipe) {
+                replaceImages(recipe)
+            } else {
+                res.status(404).json({
+                    message: "Recipe does not exist"
+                })
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                error: err
+            })
+        });
+
+    const replaceImages = (recipe) => {
+        let uploadCounter = 0;
+        let imageURLs = []
+        for (let i = 0; i < req.files.recipeImages.length; i++) {
+            const imageToLoad = req.files.recipeImages[i];
+            datauri.format(imageToLoad.mimetype, imageToLoad.buffer);
+            cloudinary.v2.uploader.upload(datauri.content, {
+                public_id: `The-Mish-Dish/${recipe.recipeCode}/${i + 1}`,
+                transformation: [{
+                    quality: 100,
+                    overwrite: true,
+                    invalidate: true
+                }]
+            },
+                function (error, result) {
+                    if (error) {
+                        console.log(result, error);
+                    }
+                    uploadCounter++;
+                    imageURLs.push(result.secure_url)
+
+                    // Send Response to Client
+                    if (uploadCounter == (req.files.recipeImages.length)) {
+                        console.log(imageURLs)
+                        Recipe.findByIdAndUpdate({
+                            _id: recipe._id
+                        }, {
+                            $set: {
+                                images: imageURLs
+                            }
+                        }, {
+                            new: true
+                        }).then(result => {
+                            rebuildFrontend()
+                            res.status(200).json({
+                                message: "Recipe Images Updated",
+                                recipe: result
+                            })
+                        })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    error: err
+                                })
+                            })
+                    }
+                });
         }
     }
 });

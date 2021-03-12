@@ -11,10 +11,6 @@ const recipeSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    recipeType: {
-        type: String,
-        required: true
-    },
     diet: {
         type: String,
         required: true

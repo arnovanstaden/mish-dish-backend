@@ -330,6 +330,27 @@ const saveEditRecipe = () => {
         });
 }
 
+const loadImages = (recipe) => {
+    $("#edit-recipe-images-container").empty();
+
+    // Thumbnail
+    let recipeThumbnail = recipe.thumbnail;
+    recipeThumbnail = recipeThumbnail.replace("upload/", "upload/w_200/f_auto/");
+    $("#edit-thumbnail-image-container img").attr("src", recipeThumbnail);
+
+    // Product Images
+    let imageCount = 0;
+    recipe.images.forEach(image => {
+        imageCount++;
+        image = image.replace("upload/", "upload/w_200/f_auto/");
+        $("#edit-recipe-images-container").append(
+            `<div class="edit-recipe-image-wrapper">
+            <img src="${image}">   
+            </div > `
+        )
+    })
+}
+
 
 // Delete Recipe
 
@@ -350,6 +371,80 @@ const deleteRecipe = () => {
         .catch(err => {
             console.log(err);
         })
+}
+
+
+// -----------------------
+// REPLACE IMAGES
+
+// Replace Recipe Thumbnail Image
+
+$("#edit-replace-recipe-thumbnail").click(function () {
+    event.preventDefault();
+    $('#replaceThumbnail').trigger('click');
+});
+
+$("#replaceThumbnail").change(function () {
+    let recipeID = $(this).closest("#main-recipes-edit-container").attr("data-recipe-id");
+    replaceRecipeThumbnail(recipeID)
+})
+
+const replaceRecipeThumbnail = (recipeID) => {
+    showLoader("Replacing Thumbnail Image");
+    let formData = new FormData()
+    let thumbnailImage = document.getElementById('replaceThumbnail').files[0];
+    formData.append("thumbnail", thumbnailImage);
+    formData.append("recipeID", recipeID);
+
+    axios({
+        method: 'patch',
+        url: `${api_url}/recipes/recipeThumbnail`,
+        data: formData
+    })
+        .then((response) => {
+            hideLoader()
+            notify("Thumbnail Image Replaced");
+            loadImages(response.data.recipe)
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+// Replace recipe Images
+
+$("#edit-replace-recipe-images").click(function () {
+    event.preventDefault();
+    $('#replaceRecipeImages').trigger('click');
+});
+
+$("#replaceRecipeImages").change(function () {
+    let recipeID = $(this).closest("#main-recipes-edit-container").attr("data-recipe-id");
+    recipeRecipeImages(recipeID)
+})
+
+const recipeRecipeImages = (recipeID) => {
+    showLoader("Replacing Recipe Images");
+    let formData = new FormData()
+    let recipeImages = document.getElementById('replaceRecipeImages');
+    for (let i = 0; i < recipeImages.files.length; i++) {
+        formData.append("recipeImages", recipeImages.files[i])
+    }
+    formData.append("recipeID", recipeID);
+
+    axios({
+        method: 'patch',
+        url: `${api_url}/recipes/recipeImages`,
+        data: formData
+    })
+        .then((response) => {
+            hideLoader()
+            notify("Recipe Images Replaced");
+            loadImages(response.data.recipe)
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
 
 
@@ -404,3 +499,4 @@ $(document).on("click", ".component-delete-button", function () {
     let form = $(this).closest("form").attr("id");
     $(this).parent().remove();
 })
+

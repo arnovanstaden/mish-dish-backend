@@ -377,11 +377,15 @@
                             <div class="edit-image-container" id="edit-thumbnail-image-container">
                                 <img src="" alt="Recipe Thumbnail Image">
                             </div>
+                            <input type="file" id="replaceThumbnail" style="display:none" accept="image/x-png,image/jpeg,image/jpg" />
+                            <button class="my-button mt-4" id="edit-replace-recipe-thumbnail">Replace Thumbnail</button>
                         </div>
                         <div class="form-group">
                             <label>Recipe Images</label>
                             <div class="edit-image-container" id="edit-recipe-images-container">
                             </div>
+                            <input type="file" id="replaceRecipeImages" style="display:none" accept="image/x-png,image/jpeg,image/jpg" multiple />
+                            <button class="my-button mt-4" id="edit-replace-recipe-images">Replace Recipe Images</button>
                         </div>
                         <small class="form-text text-muted">To edit recipe images, you would have to delete the
                             recipe and add the recipe again with the new images</small>
