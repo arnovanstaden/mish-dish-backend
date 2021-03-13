@@ -7,6 +7,7 @@ const { jwtAuth } = require("../middleware/jwt-auth");
 const transporter = require("../utils/nodemailer");
 
 const Profile = require("../models/Profile");
+const Recipe = require("../models/Recipe");
 
 router.get("/", jwtAuth, (req, res) => {
     Profile.findOne({
@@ -102,11 +103,33 @@ router.post("/handleFavourite", jwtAuth, (req, res) => {
     }).then(profile => {
         // Remove if found
         let newFavourites = []
+
+        // Remove
         if (profile.favourites.includes(req.body.recipeID)) {
             newFavourites = [...profile.favourites].filter(recipe => recipe != req.body.recipeID);
-            console.log(newFavourites)
-        } else {
-            newFavourites = [...profile.favourites, req.body.recipeID]
+
+            Recipe.findByIdAndUpdate({
+                _id: req.body.recipeID
+            },
+                { $inc: { favourites: -1 } },
+                (err, res) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+        }
+        // Add
+        else {
+            newFavourites = [...profile.favourites, req.body.recipeID];
+            Recipe.findByIdAndUpdate({
+                _id: req.body.recipeID
+            },
+                { $inc: { favourites: 1 } },
+                (err, res) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
         }
         Profile.findByIdAndUpdate(
             { _id: profile._id },

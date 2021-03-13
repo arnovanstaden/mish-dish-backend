@@ -99,7 +99,7 @@ module.exports = app;
 
 // Recipe.updateMany(
 //     {},
-//     { "$set": { type: "main meal" } },
+//     { "$set": { favourites: 0 } },
 //     (err, result) => {
 //         console.log(result)
 //     }

@@ -53,7 +53,7 @@ const recipeSchema = mongoose.Schema({
     tags: {
         type: Array
     },
-    likes: {
+    favourites: {
         type: Number
     },
     recommended: {
