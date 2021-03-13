@@ -4,8 +4,19 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { jwtAuth } = require("../middleware/jwt-auth");
+const transporter = require("../utils/nodemailer");
 
 const Profile = require("../models/Profile");
+
+router.get("/", jwtAuth, (req, res) => {
+    Profile.findOne({
+        email: req.profile.email
+    }, {
+        password: 0
+    }, (err, profile) => {
+        res.status(200).json(profile)
+    })
+})
 
 router.post("/register", (req, res) => {
     // Check if email already exists
@@ -50,7 +61,7 @@ router.post("/login", (req, res) => {
         .then(profile => {
             if (!profile) {
                 return res.status(401).json({
-                    message: "No Such User Found"
+                    message: "Incorrect Login Details"
                 })
             }
             // If User Found
@@ -73,7 +84,7 @@ router.post("/login", (req, res) => {
 
                     // Password Doesn't Match
                     return res.status(401).json({
-                        message: "Wrong Password"
+                        message: "Incorrect Login Details"
                     })
                 })
                 .catch(err => {
@@ -85,14 +96,33 @@ router.post("/login", (req, res) => {
         })
 });
 
-router.get("/favourites", jwtAuth, (req, res) => {
+router.post("/handleFavourite", jwtAuth, (req, res) => {
     Profile.findOne({
         email: req.profile.email
-    }, (err, profile) => {
-        res.status(200).json({
-            favourites: profile.favourites
-        })
+    }).then(profile => {
+        // Remove if found
+        let newFavourites = []
+        if (profile.favourites.includes(req.body.recipeID)) {
+            newFavourites = [...profile.favourites].filter(recipe => recipe != req.body.recipeID);
+            console.log(newFavourites)
+        } else {
+            newFavourites = [...profile.favourites, req.body.recipeID]
+        }
+        Profile.findByIdAndUpdate(
+            { _id: profile._id },
+            {
+                $set: {
+                    favourites: newFavourites
+                }
+            }, (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                res.status(200).send("Favourite Updated")
+            })
     })
 })
+
+
 
 module.exports = router;
