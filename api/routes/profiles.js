@@ -34,6 +34,7 @@ router.post("/register", (req, res) => {
             if (error) {
                 return console.log(error)
             }
+
             const profile = new Profile({
                 _id: new mongoose.Types.ObjectId(),
                 email: req.body.email,
@@ -41,9 +42,17 @@ router.post("/register", (req, res) => {
                 name: req.body.name
             })
             profile.save()
-                .then(result => {
-                    return res.status(201).json({
-                        message: "User Created"
+                .then(profile => {
+                    const user = {
+                        email: profile.email,
+                        password: profile.password
+                    }
+                    const jwtToken = jwt.sign(user, process.env.JWT_SECRET);
+                    return res.status(200).json({
+                        message: "Login Successful",
+                        name: profile.name,
+                        favourites: profile.favourites,
+                        token: jwtToken
                     })
                 })
                 .catch(error => {
