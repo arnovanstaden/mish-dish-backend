@@ -5,7 +5,8 @@ const mongoose = require("mongoose")
 
 const User = require("../models/User");
 
-router.post("/", (req, res) => {
+// admin
+router.post("/admin", (req, res) => {
     // bcrypt.hash(req.body.password, 12, (error, hashedPassword) => {
     //     if (error) {
     //         return console.log(error)
@@ -27,14 +28,5 @@ router.post("/", (req, res) => {
     res.status(403).send()
 })
 
-router.get("/", (req, res) => {
-    // User.find()
-    //     .then(result => {
-    //         res.status(200).json({
-    //             result
-    //         })
-    //     })
-    res.status(403).send()
-})
 
 module.exports = router;

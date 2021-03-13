@@ -15,6 +15,7 @@ const { rebuildFrontend } = require("./api/utils/utils")
 const recipeRoutes = require("./api/routes/recipes");
 const authRoutes = require("./api/routes/auth")
 const userRoutes = require("./api/routes/users")
+const profilesRoutes = require("./api/routes/profiles")
 
 const Recipe = require("./api/models/Recipe");
 
@@ -64,6 +65,7 @@ app.use(session({
 app.use("/recipes", recipeRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/profile", profilesRoutes);
 
 app.get("/", checkAuth, (req, res, next) => {
     res.sendFile(path.join(appRoot, "/api/views/dashboard.html"));

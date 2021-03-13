@@ -10,8 +10,8 @@ router.post("/login", (req, res) => {
     const password = req.body.password;
 
     User.findOne({
-            username: username
-        })
+        username: username
+    })
         .then(user => {
             if (!user) {
                 return res.redirect("/login")
