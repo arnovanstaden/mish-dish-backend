@@ -15,6 +15,9 @@ router.get("/", jwtAuth, (req, res) => {
     }, {
         password: 0
     }, (err, profile) => {
+        if (err) {
+            return console.log(err)
+        }
         res.status(200).json(profile)
     })
 })
@@ -48,11 +51,12 @@ router.post("/register", (req, res) => {
                         password: profile.password
                     }
                     const jwtToken = jwt.sign(user, process.env.JWT_SECRET);
+
+                    delete profile.password
                     return res.status(200).json({
                         message: "Login Successful",
-                        name: profile.name,
-                        favourites: profile.favourites,
-                        token: jwtToken
+                        token: jwtToken,
+                        profile
                     })
                 })
                 .catch(error => {
@@ -84,11 +88,12 @@ router.post("/login", (req, res) => {
                             password: profile.password
                         }
                         const jwtToken = jwt.sign(user, process.env.JWT_SECRET);
+
+                        delete profile.password
                         return res.status(200).json({
                             message: "Login Successful",
-                            name: profile.name,
-                            favourites: profile.favourites,
-                            token: jwtToken
+                            token: jwtToken,
+                            profile
                         })
                     }
 
