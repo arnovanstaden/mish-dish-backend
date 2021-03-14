@@ -16,7 +16,9 @@ const userSchema = mongoose.Schema({
     },
     favourites: {
         type: Array
-    }
-});
+    },
+
+},
+    { timestamps: true });
 
 module.exports = mongoose.model("Profile", userSchema);
