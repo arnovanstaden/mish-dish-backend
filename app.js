@@ -8,7 +8,7 @@ const appRoot = path.dirname(require.main.filename);
 const session = require("express-session");
 const mongoDBStore = require("connect-mongodb-session")(session);
 const checkAuth = require("./api/middleware/check-auth");
-const { rebuildFrontend } = require("./api/utils/utils")
+const { rebuildSiteCron } = require("./api/utils/cron");
 
 
 // Import Routes
@@ -92,9 +92,13 @@ app.use((error, req, res, next) => {
             message: error.message
         }
     })
-})
+});
+
+// Cron
+rebuildSiteCron();
 
 module.exports = app;
+
 
 
 // Recipe.updateMany(

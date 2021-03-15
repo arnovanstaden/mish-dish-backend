@@ -59,7 +59,9 @@ const recipeSchema = mongoose.Schema({
     recommended: {
         type: Boolean
     }
-});
+},
+    { timestamps: true }
+);
 
 recipeSchema.plugin(AutoIncrement, {
     inc_field: 'recipeNo'
