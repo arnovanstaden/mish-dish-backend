@@ -3,7 +3,7 @@ const axios = require("axios");
 const rebuildFrontend = () => {
     axios({
         method: "post",
-        url: "https://api.vercel.com/v1/integrations/deploy/prj_zhbMslwzBDnDUS5qc2N8450qDNxa/rwRPTiVefg"
+        url: "https://api.vercel.com/v1/integrations/deploy/prj_lTySTMvdxWunsLuOtfmaq01KlEZS/EyVC9kw60e"
     })
         .then(result => {
             console.log(result);
