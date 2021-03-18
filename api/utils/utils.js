@@ -6,7 +6,7 @@ const rebuildFrontend = () => {
         url: "https://api.vercel.com/v1/integrations/deploy/prj_lTySTMvdxWunsLuOtfmaq01KlEZS/EyVC9kw60e"
     })
         .then(result => {
-            console.log(result);
+            console.log("rebuild request sent")
         })
         .catch(err => console.log(err))
 }

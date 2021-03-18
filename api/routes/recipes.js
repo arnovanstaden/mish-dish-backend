@@ -215,14 +215,14 @@ router.post("/", checkAuth, upload.fields([{
                         }).then(result => {
                             console.log("Recipe Image URLs Added");
                             rebuildFrontend();
-
-                            // Send notification after 2 minutes
-                            setTimeout((recipe) => {
-                                newRecipeNotification
-                            }, 120000);
                             res.status(200).json({
                                 message: "Recipe Added"
                             })
+                            // Send notification after 2 minutes
+                            setTimeout((recipe) => {
+                                Notifications.newRecipeNotification(recipe)
+                            }, 120000);
+
                         })
                             .catch(err => {
                                 console.log(err);
