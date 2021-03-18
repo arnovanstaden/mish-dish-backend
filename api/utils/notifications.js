@@ -53,7 +53,6 @@ const unSubscribe = async (pushSubscription) => {
 }
 
 const newRecipeNotification = async (recipe) => {
-    console.log("New Recipe Notification")
     let payload = {
         title: "New Recipe Added",
         text: `The Mish Dish added a new recipe: ${recipe.name}`,
@@ -61,11 +60,17 @@ const newRecipeNotification = async (recipe) => {
         primaryKey: 2
     }
 
-    // Send
-    const subscriptions = await Subscription.find().then(result => result)
-    subscriptions.forEach(subscription => {
-        webpush.sendNotification(subscription.subscription, JSON.stringify(payload));
-    })
+    // Wait & Send Send
+    const subscriptions = await Subscription.find().then(result => result).catch(err => console.log(err))
+
+    setTimeout(() => {
+        console.log("New Recipe Notification:")
+        console.log(payload);
+        subscriptions.forEach(subscription => {
+            sendNotification(subscription.subscription, JSON.stringify(payload));
+        });
+        console.log("Notification Count: ", subscriptions.length)
+    }, 120000)
 
 }
 

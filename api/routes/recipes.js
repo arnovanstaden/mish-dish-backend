@@ -19,12 +19,6 @@ cloudinary.config({
 const datauri = new DataURI();
 let upload = multer();
 
-
-router.post("/testNotif", (req, res) => {
-    Notifications.newRecipeNotification(req.body)
-    res.status(200).send()
-})
-
 // Get All Recipes
 router.get("/", (req, res, next) => {
     Recipe.find()
@@ -219,9 +213,7 @@ router.post("/", checkAuth, upload.fields([{
                                 message: "Recipe Added"
                             })
                             // Send notification after 2 minutes
-                            setTimeout((recipe) => {
-                                Notifications.newRecipeNotification(recipe)
-                            }, 120000);
+                            Notifications.newRecipeNotification(recipe)
 
                         })
                             .catch(err => {
