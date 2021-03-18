@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { jwtAuth } = require("../middleware/jwt-auth");
-const { sendNotification } = require("../utils/pushNotifications");
+const Notifications = require("../utils/notifications");
 
 const Profile = require("../models/Profile");
 const Recipe = require("../models/Recipe");
@@ -164,11 +164,19 @@ router.post("/handleFavourite", jwtAuth, (req, res) => {
 // Notifications
 
 router.post("/subscribe", (req, res) => {
-    const pushSubscription = req.body
-    sendNotification(pushSubscription)
-    res.status("200").send()
+    let data = req.body
+    if (data.status === "subscribe") {
+        Notifications.subscribe(data.pushSubscription)
+            .then(() => {
+                res.status(200).send()
+            })
+    } else {
+        Notifications.unSubscribe(data.pushSubscription)
+            .then(() => {
+                res.status("200").send()
+            })
+    }
 })
-
 
 
 module.exports = router;

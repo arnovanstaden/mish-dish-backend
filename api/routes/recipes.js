@@ -7,7 +7,8 @@ const cloudinary = require("cloudinary");
 const DataURI = require('datauri');
 const checkAuth = require("../middleware/check-auth");
 const Recipe = require("../models/Recipe");
-const { rebuildFrontend } = require("../utils/utils")
+const { rebuildFrontend } = require("../utils/utils");
+const Notifications = require("../utils/notifications")
 
 // Config
 cloudinary.config({
@@ -16,7 +17,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const datauri = new DataURI();
-let upload = multer()
+let upload = multer();
+
+
+router.post("/testNotif", (req, res) => {
+    Notifications.newRecipeNotification(req.body)
+    res.status(200).send()
+})
 
 // Get All Recipes
 router.get("/", (req, res, next) => {
@@ -430,6 +437,8 @@ router.delete("/:recipeID", checkAuth, (req, res, next) => {
 //             })
 //         })
 // })
+
+
 
 
 
