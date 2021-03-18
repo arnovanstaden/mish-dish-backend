@@ -4,7 +4,8 @@ const subscriptionSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     subscription: {
         type: mongoose.Schema.Types.Mixed,
-        required: true
+        required: true,
+        unique: true
     }
 }
 );

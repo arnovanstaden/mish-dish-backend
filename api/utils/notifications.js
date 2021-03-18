@@ -36,7 +36,10 @@ const subscribe = async (pushSubscription, notify) => {
             sendNotification(pushSubscription, JSON.stringify(payload))
         }
     }
-    ).catch(err => console.log(err))
+    ).catch(err => {
+        console.log("Error Subscribing")
+        return
+    })
 }
 
 const unSubscribe = async (pushSubscription) => {
