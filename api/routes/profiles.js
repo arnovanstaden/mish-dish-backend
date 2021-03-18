@@ -166,7 +166,7 @@ router.post("/handleFavourite", jwtAuth, (req, res) => {
 router.post("/subscribe", (req, res) => {
     let data = req.body
     if (data.status === "subscribe") {
-        Notifications.subscribe(data.pushSubscription)
+        Notifications.subscribe(data.pushSubscription, data.notify)
             .then(() => {
                 res.status(200).send()
             })

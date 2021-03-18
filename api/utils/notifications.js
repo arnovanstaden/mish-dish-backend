@@ -19,7 +19,7 @@ const sendNotification = (pushSubscription, payload) => {
         })
 }
 
-const subscribe = async (pushSubscription) => {
+const subscribe = async (pushSubscription, notify) => {
     let payload = {
         title: "New Recipe Notifications",
         text: "You will be notified when new recipes are added to The Mish Dish!",
@@ -31,8 +31,10 @@ const subscribe = async (pushSubscription) => {
         subscription: pushSubscription
     })
     await subscription.save().then((res) => {
-        console.log("Subscribed")
-        sendNotification(pushSubscription, JSON.stringify(payload))
+        console.log(`Subscribed. Notify: ${notify}`);
+        if (notify) {
+            sendNotification(pushSubscription, JSON.stringify(payload))
+        }
     }
     ).catch(err => console.log(err))
 }
@@ -48,6 +50,7 @@ const unSubscribe = async (pushSubscription) => {
 }
 
 const newRecipeNotification = async (recipe) => {
+    console.log("New Recipe Notification")
     let payload = {
         title: "New Recipe Added",
         text: `The Mish Dish added a new recipe: ${recipe.name}`,
