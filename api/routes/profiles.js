@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { jwtAuth } = require("../middleware/jwt-auth");
-const transporter = require("../utils/nodemailer");
+const { sendNotification } = require("../utils/pushNotifications");
 
 const Profile = require("../models/Profile");
 const Recipe = require("../models/Recipe");
@@ -158,6 +158,15 @@ router.post("/handleFavourite", jwtAuth, (req, res) => {
                 res.status(200).send("Favourite Updated")
             })
     })
+});
+
+
+// Notifications
+
+router.post("/subscribe", (req, res) => {
+    const pushSubscription = req.body
+    sendNotification(pushSubscription)
+    res.status("200").send()
 })
 
 
