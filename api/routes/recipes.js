@@ -153,7 +153,7 @@ router.post("/", checkAuth, upload.fields([{
                 width: 1000,
                 height: 1000,
                 crop: "lfill",
-                quality: 1000
+                quality: 100
             }]
         },
             function (error, result) {
@@ -188,7 +188,7 @@ router.post("/", checkAuth, upload.fields([{
                 public_id: `The-Mish-Dish/${recipeCode}/${i + 1}`,
                 transformation: [{
                     height: 1080,
-                    quality: 1000
+                    quality: 100
                 }]
             },
                 function (error, result) {
